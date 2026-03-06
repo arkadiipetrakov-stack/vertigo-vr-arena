@@ -1,3 +1,9 @@
+/* ============================================
+   VERTIGO VR — Hero Particle System
+   OPTIMIZED: pre-rendered glow sprites, no shadowBlur,
+              squared-distance connections, 30fps cap
+   ============================================ */
+
 class ParticleSystem {
   constructor(canvasId) {
     this.canvas = document.getElementById(canvasId);
@@ -8,9 +14,11 @@ class ParticleSystem {
     this.mouse = { x: null, y: null };
     this.animationId = null;
     this.isVisible = true;
+    this.lastFrameTime = 0;
+    this.frameInterval = 1000 / 30; // 30fps cap
 
-    // Responsive particle count
-    this.particleCount = window.innerWidth < 768 ? 25 : 55;
+    // Responsive particle count (reduced)
+    this.particleCount = window.innerWidth < 768 ? 18 : 35;
 
     // Colors
     this.colors = [
@@ -21,8 +29,33 @@ class ParticleSystem {
 
     // Mouse repulsion radius
     this.mouseRadius = 150;
+    this.mouseRadiusSq = 150 * 150;
+
+    // Pre-render glow sprites
+    this._glowCache = new Map();
 
     this.init();
+  }
+
+  // Pre-render a radial glow image for a given color
+  _getGlow(color, size) {
+    const key = `${color.r},${color.g},${color.b},${Math.round(size)}`;
+    if (this._glowCache.has(key)) return this._glowCache.get(key);
+
+    const dim = Math.ceil(size * 8);
+    const c = document.createElement('canvas');
+    c.width = dim; c.height = dim;
+    const cx = c.getContext('2d');
+    const half = dim / 2;
+    const grad = cx.createRadialGradient(half, half, 0, half, half, size * 3);
+    grad.addColorStop(0, `rgba(${color.r},${color.g},${color.b},0.4)`);
+    grad.addColorStop(0.3, `rgba(${color.r},${color.g},${color.b},0.12)`);
+    grad.addColorStop(1, 'transparent');
+    cx.fillStyle = grad;
+    cx.fillRect(0, 0, dim, dim);
+
+    this._glowCache.set(key, c);
+    return c;
   }
 
   init() {
@@ -33,13 +66,14 @@ class ParticleSystem {
   }
 
   resize() {
-    const dpr = window.devicePixelRatio || 1;
+    // Cap DPR at 1.5 for performance
+    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
     const rect = this.canvas.parentElement.getBoundingClientRect();
     this.canvas.width = rect.width * dpr;
     this.canvas.height = rect.height * dpr;
     this.canvas.style.width = rect.width + 'px';
     this.canvas.style.height = rect.height + 'px';
-    this.ctx.scale(dpr, dpr);
+    this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     this.width = rect.width;
     this.height = rect.height;
   }
@@ -65,7 +99,6 @@ class ParticleSystem {
   }
 
   setupEventListeners() {
-    // Mouse move tracking
     this._onMouseMove = (e) => {
       const rect = this.canvas.getBoundingClientRect();
       this.mouse.x = e.clientX - rect.left;
@@ -80,7 +113,6 @@ class ParticleSystem {
     this.canvas.addEventListener('mousemove', this._onMouseMove, { passive: true });
     this.canvas.addEventListener('mouseleave', this._onMouseLeave, { passive: true });
 
-    // Touch support
     this._onTouchMove = (e) => {
       if (e.touches.length > 0) {
         const rect = this.canvas.getBoundingClientRect();
@@ -97,25 +129,24 @@ class ParticleSystem {
     this.canvas.addEventListener('touchmove', this._onTouchMove, { passive: true });
     this.canvas.addEventListener('touchend', this._onTouchEnd, { passive: true });
 
-    // Resize handler (debounced)
     this._resizeTimeout = null;
     this._onResize = () => {
       clearTimeout(this._resizeTimeout);
       this._resizeTimeout = setTimeout(() => {
         this.resize();
-        this.particleCount = window.innerWidth < 768 ? 25 : 55;
+        this.particleCount = window.innerWidth < 768 ? 18 : 35;
         this.createParticles();
-      }, 200);
+      }, 250);
     };
 
     window.addEventListener('resize', this._onResize, { passive: true });
 
-    // Visibility observer - pause when canvas not in viewport
     this._observer = new IntersectionObserver(
       (entries) => {
         entries.forEach(entry => {
           this.isVisible = entry.isIntersecting;
           if (this.isVisible && !this.animationId) {
+            this.lastFrameTime = performance.now();
             this.animate();
           }
         });
@@ -128,95 +159,77 @@ class ParticleSystem {
 
   drawCircle(p) {
     const ctx = this.ctx;
-    ctx.save();
+    // Draw glow sprite (replaces expensive shadowBlur)
+    const glow = this._getGlow(p.color, p.size);
+    const half = glow.width / 2;
+    ctx.globalAlpha = p.opacity * 0.5;
+    ctx.drawImage(glow, p.x - half, p.y - half);
 
-    // Soft glow effect
-    ctx.shadowBlur = p.size * 4;
-    ctx.shadowColor = `rgba(${p.color.r}, ${p.color.g}, ${p.color.b}, ${p.opacity * 0.6})`;
-
+    // Draw dot
+    ctx.globalAlpha = p.opacity;
     ctx.beginPath();
     ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(${p.color.r}, ${p.color.g}, ${p.color.b}, ${p.opacity})`;
+    ctx.fillStyle = `rgba(${p.color.r},${p.color.g},${p.color.b},${p.opacity})`;
     ctx.fill();
-
-    ctx.restore();
   }
 
   drawTriangle(p) {
     const ctx = this.ctx;
     const size = p.size * 2.5;
-
     ctx.save();
     ctx.translate(p.x, p.y);
     ctx.rotate(p.rotation);
-
+    ctx.globalAlpha = p.opacity;
     ctx.beginPath();
     ctx.moveTo(0, -size);
     ctx.lineTo(-size * 0.866, size * 0.5);
     ctx.lineTo(size * 0.866, size * 0.5);
     ctx.closePath();
-
-    ctx.strokeStyle = `rgba(${p.color.r}, ${p.color.g}, ${p.color.b}, ${p.opacity})`;
+    ctx.strokeStyle = `rgba(${p.color.r},${p.color.g},${p.color.b},${p.opacity})`;
     ctx.lineWidth = 1;
     ctx.stroke();
-
     ctx.restore();
   }
 
   drawHexagon(p) {
     const ctx = this.ctx;
     const size = p.size * 2;
-
     ctx.save();
     ctx.translate(p.x, p.y);
     ctx.rotate(p.rotation);
-
-    // Glow effect for hexagons
-    ctx.shadowBlur = size * 2;
-    ctx.shadowColor = `rgba(${p.color.r}, ${p.color.g}, ${p.color.b}, ${p.opacity * 0.4})`;
-
+    ctx.globalAlpha = p.opacity;
     ctx.beginPath();
     for (let i = 0; i < 6; i++) {
       const angle = (Math.PI / 3) * i - Math.PI / 6;
       const x = size * Math.cos(angle);
       const y = size * Math.sin(angle);
-      if (i === 0) {
-        ctx.moveTo(x, y);
-      } else {
-        ctx.lineTo(x, y);
-      }
+      if (i === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
     }
     ctx.closePath();
-
-    ctx.strokeStyle = `rgba(${p.color.r}, ${p.color.g}, ${p.color.b}, ${p.opacity})`;
+    ctx.strokeStyle = `rgba(${p.color.r},${p.color.g},${p.color.b},${p.opacity})`;
     ctx.lineWidth = 1;
     ctx.stroke();
-
     ctx.restore();
   }
 
   drawParticle(p) {
     switch (p.shape) {
-      case 'circle':
-        this.drawCircle(p);
-        break;
-      case 'triangle':
-        this.drawTriangle(p);
-        break;
-      case 'hexagon':
-        this.drawHexagon(p);
-        break;
+      case 'circle':   this.drawCircle(p); break;
+      case 'triangle': this.drawTriangle(p); break;
+      case 'hexagon':  this.drawHexagon(p); break;
     }
   }
 
   updateParticle(p) {
-    // Apply mouse repulsion
+    // Mouse repulsion with squared distance (no sqrt)
     if (this.mouse.x !== null && this.mouse.y !== null) {
       const dx = p.x - this.mouse.x;
       const dy = p.y - this.mouse.y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
+      const distSq = dx * dx + dy * dy;
 
-      if (dist < this.mouseRadius && dist > 0) {
+      if (distSq < this.mouseRadiusSq && distSq > 0) {
+        const dist = Math.sqrt(distSq); // sqrt only when needed
         const force = (this.mouseRadius - dist) / this.mouseRadius;
         const angle = Math.atan2(dy, dx);
         p.x += Math.cos(angle) * force * 1.5;
@@ -224,70 +237,71 @@ class ParticleSystem {
       }
     }
 
-    // Apply velocity
     p.x += p.speedX;
     p.y += p.speedY;
 
-    // Rotate non-circle shapes
     if (p.shape !== 'circle') {
       p.rotation += p.rotationSpeed;
     }
 
-    // Wrap around: particles leaving top reappear at bottom
     if (p.y < -p.size * 3) {
       p.y = this.height + p.size * 3;
       p.x = Math.random() * this.width;
     }
-
-    // Wrap horizontal edges
-    if (p.x < -p.size * 3) {
-      p.x = this.width + p.size * 3;
-    } else if (p.x > this.width + p.size * 3) {
-      p.x = -p.size * 3;
-    }
-
-    // Wrap bottom edge (if particle somehow goes below)
-    if (p.y > this.height + p.size * 3) {
-      p.y = -p.size * 3;
-    }
+    if (p.x < -p.size * 3) p.x = this.width + p.size * 3;
+    else if (p.x > this.width + p.size * 3) p.x = -p.size * 3;
+    if (p.y > this.height + p.size * 3) p.y = -p.size * 3;
   }
 
-  animate() {
+  animate(now) {
     if (!this.isVisible) {
       this.animationId = null;
       return;
     }
 
-    this.ctx.clearRect(0, 0, this.width, this.height);
+    this.animationId = requestAnimationFrame((t) => this.animate(t));
+
+    // 30fps frame limiter
+    if (!now) now = performance.now();
+    const elapsed = now - this.lastFrameTime;
+    if (elapsed < this.frameInterval) return;
+    this.lastFrameTime = now - (elapsed % this.frameInterval);
+
+    const ctx = this.ctx;
+    ctx.clearRect(0, 0, this.width, this.height);
 
     for (let i = 0; i < this.particles.length; i++) {
       this.updateParticle(this.particles[i]);
       this.drawParticle(this.particles[i]);
     }
 
-    // Draw faint connections between nearby particles
     this.drawConnections();
-
-    this.animationId = requestAnimationFrame(() => this.animate());
   }
 
   drawConnections() {
-    const maxDist = 120;
+    // OPTIMIZED: squared distance comparison (no Math.sqrt)
+    const maxDistSq = 14400; // 120 * 120
     const ctx = this.ctx;
+    const ps = this.particles;
+    const len = ps.length;
 
-    for (let i = 0; i < this.particles.length; i++) {
-      for (let j = i + 1; j < this.particles.length; j++) {
-        const dx = this.particles[i].x - this.particles[j].x;
-        const dy = this.particles[i].y - this.particles[j].y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
+    ctx.lineWidth = 0.5;
 
-        if (dist < maxDist) {
-          const opacity = (1 - dist / maxDist) * 0.08;
+    for (let i = 0; i < len; i++) {
+      for (let j = i + 1; j < len; j++) {
+        const dx = ps[i].x - ps[j].x;
+        // Quick X-axis reject before full calculation
+        if (dx > 120 || dx < -120) continue;
+        const dy = ps[i].y - ps[j].y;
+        if (dy > 120 || dy < -120) continue;
+        const distSq = dx * dx + dy * dy;
+
+        if (distSq < maxDistSq) {
+          const opacity = (1 - distSq / maxDistSq) * 0.08;
           ctx.beginPath();
-          ctx.moveTo(this.particles[i].x, this.particles[i].y);
-          ctx.lineTo(this.particles[j].x, this.particles[j].y);
+          ctx.moveTo(ps[i].x, ps[i].y);
+          ctx.lineTo(ps[j].x, ps[j].y);
           ctx.strokeStyle = `rgba(0, 240, 255, ${opacity})`;
-          ctx.lineWidth = 0.5;
           ctx.stroke();
         }
       }
@@ -299,19 +313,13 @@ class ParticleSystem {
       cancelAnimationFrame(this.animationId);
       this.animationId = null;
     }
-
-    if (this._observer) {
-      this._observer.disconnect();
-    }
-
+    if (this._observer) this._observer.disconnect();
     this.canvas.removeEventListener('mousemove', this._onMouseMove);
     this.canvas.removeEventListener('mouseleave', this._onMouseLeave);
     this.canvas.removeEventListener('touchmove', this._onTouchMove);
     this.canvas.removeEventListener('touchend', this._onTouchEnd);
     window.removeEventListener('resize', this._onResize);
-
     clearTimeout(this._resizeTimeout);
-
     this.particles = [];
     this.ctx.clearRect(0, 0, this.width, this.height);
   }

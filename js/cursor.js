@@ -1,108 +1,113 @@
 /* ============================================
    VERTIGO VR Arena — Custom Cursor Effect
-   Ring + Dot + Background Glow + Particle Trail
+   OPTIMIZED: Canvas-based particle trail (no DOM),
+              idle detection, reduced allocations
    ============================================ */
 
 class CursorEffect {
   constructor() {
-    // Bail on touch devices
     if ('ontouchstart' in window || navigator.maxTouchPoints > 0) return;
-    // Bail on reduced motion
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    // Real mouse position
     this.mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
-    // Lerped positions
     this.cursor = { x: this.mouse.x, y: this.mouse.y };
     this.glow = { x: this.mouse.x, y: this.mouse.y };
 
-    // State
     this.isHovering = false;
-    this.particles = [];
-    this.lastSpawnTime = 0;
-    this.spawnInterval = 40; // ms between particle spawns
-    this.maxParticles = 30;
+    this.isMoving = false;
+    this.lastMoveTime = 0;
 
-    // Brand colors
-    this.colors = ['#00f0ff', '#8b5cf6', '#f472b6'];
+    // Canvas-based particles (replaces 30 DOM elements)
+    this.particles = [];
+    this.maxParticles = 20;
+    this.spawnInterval = 50;
+    this.lastSpawnTime = 0;
+
+    // Brand colors as RGB arrays for fast access
+    this.colorsRGB = [
+      [0, 240, 255],
+      [139, 92, 246],
+      [244, 114, 182]
+    ];
 
     this.createElements();
     this.setupListeners();
-    this.animate();
+    this._rafId = requestAnimationFrame(() => this.animate());
   }
 
   createElements() {
-    // Hide default cursor
     document.body.classList.add('cursor-active');
 
     // Outer ring
     this.ring = document.createElement('div');
     this.ring.style.cssText = `
-      position: fixed; top: 0; left: 0;
-      width: 30px; height: 30px;
-      border: 2px solid rgba(0, 240, 255, 0.6);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9999;
-      transition: width 0.25s ease, height 0.25s ease,
-                  border-color 0.25s ease, background 0.25s ease;
-      transform: translate(-50%, -50%);
-      box-shadow: 0 0 10px rgba(0, 240, 255, 0.3),
-                  inset 0 0 10px rgba(0, 240, 255, 0.1);
-      mix-blend-mode: screen;
-      will-change: left, top;
+      position:fixed;top:0;left:0;
+      width:30px;height:30px;
+      border:2px solid rgba(0,240,255,0.6);
+      border-radius:50%;
+      pointer-events:none;z-index:9999;
+      transition:width 0.25s ease,height 0.25s ease,
+                 border-color 0.25s ease,background 0.25s ease;
+      transform:translate(-50%,-50%);
+      box-shadow:0 0 10px rgba(0,240,255,0.3),inset 0 0 10px rgba(0,240,255,0.1);
+      mix-blend-mode:screen;
+      will-change:transform;
     `;
     document.body.appendChild(this.ring);
 
     // Inner dot
     this.dot = document.createElement('div');
     this.dot.style.cssText = `
-      position: fixed; top: 0; left: 0;
-      width: 4px; height: 4px;
-      background: #00f0ff;
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9999;
-      transform: translate(-50%, -50%);
-      box-shadow: 0 0 6px rgba(0, 240, 255, 0.8);
-      will-change: left, top;
+      position:fixed;top:0;left:0;
+      width:4px;height:4px;
+      background:#00f0ff;
+      border-radius:50%;
+      pointer-events:none;z-index:9999;
+      transform:translate(-50%,-50%);
+      box-shadow:0 0 6px rgba(0,240,255,0.8);
+      will-change:transform;
     `;
     document.body.appendChild(this.dot);
 
-    // Background glow spot
+    // Background glow
     this.glowEl = document.createElement('div');
     this.glowEl.style.cssText = `
-      position: fixed; top: 0; left: 0;
-      width: 400px; height: 400px;
-      background: radial-gradient(circle, rgba(0, 240, 255, 0.08) 0%, transparent 70%);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 0;
-      transform: translate(-50%, -50%);
-      will-change: left, top;
+      position:fixed;top:0;left:0;
+      width:400px;height:400px;
+      background:radial-gradient(circle,rgba(0,240,255,0.08) 0%,transparent 70%);
+      border-radius:50%;
+      pointer-events:none;z-index:0;
+      transform:translate(-50%,-50%);
+      will-change:transform;
     `;
     document.body.appendChild(this.glowEl);
 
-    // Particle container
-    this.particleContainer = document.createElement('div');
-    this.particleContainer.style.cssText = `
-      position: fixed; top: 0; left: 0;
-      width: 100%; height: 100%;
-      pointer-events: none;
-      z-index: 9998;
-      overflow: hidden;
+    // Canvas for particle trail (replaces DOM particle container)
+    this.trailCanvas = document.createElement('canvas');
+    this.trailCanvas.style.cssText = `
+      position:fixed;top:0;left:0;
+      width:100%;height:100%;
+      pointer-events:none;z-index:9998;
     `;
-    document.body.appendChild(this.particleContainer);
+    document.body.appendChild(this.trailCanvas);
+    this.trailCtx = this.trailCanvas.getContext('2d');
+    this._resizeTrailCanvas();
+  }
+
+  _resizeTrailCanvas() {
+    // Use 1x DPR for trail canvas — lightweight decorative effect
+    this.trailCanvas.width = window.innerWidth;
+    this.trailCanvas.height = window.innerHeight;
   }
 
   setupListeners() {
-    // Track mouse
     document.addEventListener('mousemove', (e) => {
       this.mouse.x = e.clientX;
       this.mouse.y = e.clientY;
+      this.isMoving = true;
+      this.lastMoveTime = performance.now();
     }, { passive: true });
 
-    // Hover detection for interactive elements
     const hoverTargets = 'a, button, [role="button"], input, select, textarea, .btn, .tariff-card, .review-card, .faq__question';
 
     document.addEventListener('mouseover', (e) => {
@@ -110,8 +115,8 @@ class CursorEffect {
         this.isHovering = true;
         this.ring.style.width = '50px';
         this.ring.style.height = '50px';
-        this.ring.style.borderColor = 'rgba(0, 240, 255, 0.9)';
-        this.ring.style.background = 'rgba(0, 240, 255, 0.05)';
+        this.ring.style.borderColor = 'rgba(0,240,255,0.9)';
+        this.ring.style.background = 'rgba(0,240,255,0.05)';
       }
     }, { passive: true });
 
@@ -120,12 +125,11 @@ class CursorEffect {
         this.isHovering = false;
         this.ring.style.width = '30px';
         this.ring.style.height = '30px';
-        this.ring.style.borderColor = 'rgba(0, 240, 255, 0.6)';
+        this.ring.style.borderColor = 'rgba(0,240,255,0.6)';
         this.ring.style.background = 'transparent';
       }
     }, { passive: true });
 
-    // Hide when mouse leaves window
     document.addEventListener('mouseleave', () => {
       this.ring.style.opacity = '0';
       this.dot.style.opacity = '0';
@@ -137,65 +141,55 @@ class CursorEffect {
       this.dot.style.opacity = '1';
       this.glowEl.style.opacity = '1';
     }, { passive: true });
+
+    window.addEventListener('resize', () => {
+      this._resizeTrailCanvas();
+    }, { passive: true });
   }
 
-  spawnParticle() {
-    const now = performance.now();
+  spawnParticle(now) {
     if (now - this.lastSpawnTime < this.spawnInterval) return;
     if (this.particles.length >= this.maxParticles) return;
+    if (!this.isMoving) return;
     this.lastSpawnTime = now;
 
-    const size = 2 + Math.random() * 2;
-    const color = this.colors[Math.floor(Math.random() * this.colors.length)];
-
-    const el = document.createElement('div');
-    el.style.cssText = `
-      position: fixed;
-      width: ${size}px; height: ${size}px;
-      background: ${color};
-      border-radius: 50%;
-      pointer-events: none;
-      left: ${this.mouse.x}px;
-      top: ${this.mouse.y}px;
-      transform: translate(-50%, -50%);
-      box-shadow: 0 0 ${size * 2}px ${color};
-      opacity: 1;
-    `;
-
-    this.particleContainer.appendChild(el);
-
+    const c = this.colorsRGB[Math.floor(Math.random() * this.colorsRGB.length)];
     this.particles.push({
-      el,
       x: this.mouse.x,
       y: this.mouse.y,
       vx: (Math.random() - 0.5) * 2,
       vy: (Math.random() - 0.5) * 2,
-      startTime: now,
-      lifetime: 500 + Math.random() * 500
+      size: 1.5 + Math.random() * 1.5,
+      life: 1.0,
+      decay: 0.015 + Math.random() * 0.01,
+      cr: c[0], cg: c[1], cb: c[2]
     });
   }
 
-  updateParticles() {
-    const now = performance.now();
+  updateAndDrawParticles() {
+    const ctx = this.trailCtx;
+    ctx.clearRect(0, 0, this.trailCanvas.width, this.trailCanvas.height);
 
     for (let i = this.particles.length - 1; i >= 0; i--) {
       const p = this.particles[i];
-      const progress = (now - p.startTime) / p.lifetime;
+      p.life -= p.decay;
 
-      if (progress >= 1) {
-        p.el.remove();
-        this.particles.splice(i, 1);
+      if (p.life <= 0) {
+        // Fast removal — swap with last element
+        this.particles[i] = this.particles[this.particles.length - 1];
+        this.particles.pop();
         continue;
       }
 
-      // Physics: velocity + slight gravity
-      p.vy += 0.03;
+      p.vy += 0.02;
       p.x += p.vx;
       p.y += p.vy;
 
-      p.el.style.left = p.x + 'px';
-      p.el.style.top = p.y + 'px';
-      p.el.style.opacity = 1 - progress;
+      ctx.globalAlpha = p.life;
+      ctx.fillStyle = `rgb(${p.cr},${p.cg},${p.cb})`;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2);
+      ctx.fill();
     }
   }
 
@@ -204,6 +198,15 @@ class CursorEffect {
   }
 
   animate() {
+    this._rafId = requestAnimationFrame(() => this.animate());
+
+    const now = performance.now();
+
+    // Detect idle (no mouse movement for 200ms)
+    if (now - this.lastMoveTime > 200) {
+      this.isMoving = false;
+    }
+
     // Lerp cursor ring (slight lag)
     this.cursor.x = this.lerp(this.cursor.x, this.mouse.x, 0.15);
     this.cursor.y = this.lerp(this.cursor.y, this.mouse.y, 0.15);
@@ -212,21 +215,15 @@ class CursorEffect {
     this.glow.x = this.lerp(this.glow.x, this.mouse.x, 0.05);
     this.glow.y = this.lerp(this.glow.y, this.mouse.y, 0.05);
 
-    // Update positions
-    this.ring.style.left = this.cursor.x + 'px';
-    this.ring.style.top = this.cursor.y + 'px';
+    // Use transform instead of left/top (composited, no layout thrash)
+    const ringHalf = this.isHovering ? 25 : 15;
+    this.ring.style.transform = `translate(${this.cursor.x - ringHalf}px, ${this.cursor.y - ringHalf}px)`;
+    this.dot.style.transform = `translate(${this.mouse.x - 2}px, ${this.mouse.y - 2}px)`;
+    this.glowEl.style.transform = `translate(${this.glow.x - 200}px, ${this.glow.y - 200}px)`;
 
-    this.dot.style.left = this.mouse.x + 'px';
-    this.dot.style.top = this.mouse.y + 'px';
-
-    this.glowEl.style.left = this.glow.x + 'px';
-    this.glowEl.style.top = this.glow.y + 'px';
-
-    // Particles
-    this.spawnParticle();
-    this.updateParticles();
-
-    requestAnimationFrame(() => this.animate());
+    // Particles on canvas
+    this.spawnParticle(now);
+    this.updateAndDrawParticles();
   }
 }
 

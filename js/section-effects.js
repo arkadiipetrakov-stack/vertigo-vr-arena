@@ -1,5 +1,7 @@
 /* ============================================================
    SECTION EFFECTS — Themed particles + Neon characters per section
+   OPTIMIZED: no shadowBlur, pre-rendered glow sprites, 30fps cap,
+              squared-distance connections, batched draws
    ============================================================ */
 
 // Fix hero accent badge after GSAP split-text animation
@@ -22,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const isMobile = window.innerWidth < 768;
 
   // ─── Brand colors ───
-  const CYAN  = { r: 0, g: 240, b: 255 };
+  const CYAN   = { r: 0, g: 240, b: 255 };
   const VIOLET = { r: 139, g: 92, b: 246 };
   const PINK   = { r: 244, g: 114, b: 182 };
   const GREEN  = { r: 74, g: 222, b: 128 };
@@ -30,11 +32,39 @@ document.addEventListener('DOMContentLoaded', function() {
   function rgba(c, a) { return `rgba(${c.r},${c.g},${c.b},${a})`; }
   function rgb(c)     { return `rgb(${c.r},${c.g},${c.b})`; }
 
+  // ─── FPS limiter ───
+  const TARGET_FPS = 30;
+  const FRAME_INTERVAL = 1000 / TARGET_FPS;
+
+  // ─── Pre-rendered glow sprites (avoid shadowBlur per frame) ───
+  const glowCache = new Map();
+
+  function getGlowSprite(color, radius) {
+    const key = `${color.r},${color.g},${color.b},${radius}`;
+    if (glowCache.has(key)) return glowCache.get(key);
+
+    const size = Math.ceil(radius * 6);
+    const c = document.createElement('canvas');
+    c.width = size; c.height = size;
+    const cx = c.getContext('2d');
+    const half = size / 2;
+
+    const grad = cx.createRadialGradient(half, half, 0, half, half, radius * 2.5);
+    grad.addColorStop(0, rgba(color, 0.4));
+    grad.addColorStop(0.4, rgba(color, 0.1));
+    grad.addColorStop(1, 'transparent');
+    cx.fillStyle = grad;
+    cx.fillRect(0, 0, size, size);
+
+    glowCache.set(key, c);
+    return c;
+  }
+
   // ─── Section configurations ───
   const CONFIGS = {
     'social-proof': {
       particles: {
-        type: 'digits', count: isMobile ? 6 : 12,
+        type: 'digits', count: isMobile ? 4 : 8,
         pool: ['5+', '1K', '98%', '4.9'],
         colors: [CYAN], speed: 0.15, opacity: 0.08, connections: true
       },
@@ -45,7 +75,7 @@ document.addEventListener('DOMContentLoaded', function() {
     },
     'benefits': {
       particles: {
-        type: 'stars', count: isMobile ? 10 : 20,
+        type: 'stars', count: isMobile ? 6 : 14,
         colors: [CYAN, VIOLET, PINK], speed: 0.2, opacity: 0.1
       },
       characters: [
@@ -55,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function() {
     },
     'how-it-works': {
       particles: {
-        type: 'flowing', count: isMobile ? 12 : 25,
+        type: 'flowing', count: isMobile ? 8 : 18,
         colors: [CYAN], speed: 0.6, opacity: 0.06
       },
       characters: [
@@ -64,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function() {
     },
     'tariffs': {
       particles: {
-        type: 'bubbles', count: isMobile ? 8 : 15,
+        type: 'bubbles', count: isMobile ? 5 : 10,
         colors: [VIOLET, CYAN], speed: 0.25, opacity: 0.08
       },
       characters: [
@@ -74,7 +104,7 @@ document.addEventListener('DOMContentLoaded', function() {
     },
     'safety': {
       particles: {
-        type: 'shields', count: isMobile ? 6 : 12,
+        type: 'shields', count: isMobile ? 4 : 8,
         colors: [CYAN, GREEN], speed: 0.15, opacity: 0.07
       },
       characters: [
@@ -84,7 +114,7 @@ document.addEventListener('DOMContentLoaded', function() {
     },
     'reviews': {
       particles: {
-        type: 'hearts', count: isMobile ? 8 : 16,
+        type: 'hearts', count: isMobile ? 5 : 10,
         colors: [PINK, CYAN], speed: 0.2, opacity: 0.09
       },
       characters: [
@@ -93,7 +123,7 @@ document.addEventListener('DOMContentLoaded', function() {
     },
     'faq': {
       particles: {
-        type: 'questions', count: isMobile ? 6 : 12,
+        type: 'questions', count: isMobile ? 4 : 8,
         colors: [VIOLET], speed: 0.12, opacity: 0.07
       },
       characters: [
@@ -102,7 +132,7 @@ document.addEventListener('DOMContentLoaded', function() {
     },
     'booking': {
       particles: {
-        type: 'confetti', count: isMobile ? 10 : 22,
+        type: 'confetti', count: isMobile ? 6 : 14,
         colors: [CYAN, VIOLET, PINK, GREEN], speed: 0.35, opacity: 0.1
       },
       characters: [
@@ -114,7 +144,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
   /* ═══════════════════════════════════════════
-     THEMED PARTICLES
+     THEMED PARTICLES (optimized — no shadowBlur)
      ═══════════════════════════════════════════ */
 
   class ThemedParticles {
@@ -171,6 +201,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     draw(ctx) {
+      // OPTIMIZED: no shadowBlur, use pre-rendered glow sprites
       for (const p of this.particles) {
         ctx.save();
         ctx.globalAlpha = p.opacity;
@@ -180,9 +211,14 @@ document.addEventListener('DOMContentLoaded', function() {
         const col = rgb(p.color);
         ctx.fillStyle = col;
         ctx.strokeStyle = col;
-        ctx.shadowColor = rgba(p.color, 0.5);
-        ctx.shadowBlur = p.size * 3;
         ctx.lineWidth = 1;
+
+        // Draw glow sprite behind particle (replaces shadowBlur)
+        const sprite = getGlowSprite(p.color, p.size);
+        const half = sprite.width / 2;
+        ctx.globalAlpha = p.opacity * 0.6;
+        ctx.drawImage(sprite, -half, -half);
+        ctx.globalAlpha = p.opacity;
 
         switch (this.cfg.type) {
           case 'digits':   this._drawDigit(ctx, p); break;
@@ -227,14 +263,6 @@ document.addEventListener('DOMContentLoaded', function() {
       ctx.beginPath();
       ctx.arc(0, 0, p.size * 0.8, 0, Math.PI * 2);
       ctx.fill();
-      // Trail
-      ctx.globalAlpha = p.opacity * 0.3;
-      ctx.beginPath();
-      ctx.arc(-p.size * 2, 0, p.size * 0.5, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.beginPath();
-      ctx.arc(-p.size * 4, 0, p.size * 0.3, 0, Math.PI * 2);
-      ctx.fill();
     }
 
     _drawBubble(ctx, p) {
@@ -242,11 +270,6 @@ document.addEventListener('DOMContentLoaded', function() {
       ctx.beginPath();
       ctx.arc(0, 0, r, 0, Math.PI * 2);
       ctx.stroke();
-      // Highlight
-      ctx.globalAlpha = p.opacity * 0.5;
-      ctx.beginPath();
-      ctx.arc(-r * 0.3, -r * 0.3, r * 0.25, 0, Math.PI * 2);
-      ctx.fill();
     }
 
     _drawShield(ctx, p) {
@@ -258,12 +281,6 @@ document.addEventListener('DOMContentLoaded', function() {
       ctx.quadraticCurveTo(0, s * 1.2, -s * 0.8, s * 0.3);
       ctx.quadraticCurveTo(-s, -s * 0.5, 0, -s);
       ctx.closePath();
-      ctx.stroke();
-      // Checkmark inside
-      ctx.beginPath();
-      ctx.moveTo(-s * 0.25, 0);
-      ctx.lineTo(0, s * 0.3);
-      ctx.lineTo(s * 0.3, -s * 0.2);
       ctx.stroke();
     }
 
@@ -301,23 +318,24 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     _drawConnections(ctx) {
-      const max = 100;
-      for (let i = 0; i < this.particles.length; i++) {
-        for (let j = i + 1; j < this.particles.length; j++) {
-          const a = this.particles[i], b = this.particles[j];
-          const dx = a.x - b.x, dy = a.y - b.y;
-          const d = Math.sqrt(dx * dx + dy * dy);
-          if (d < max) {
-            ctx.save();
-            ctx.globalAlpha = (1 - d / max) * 0.06;
-            ctx.strokeStyle = rgba(CYAN, 1);
-            ctx.lineWidth = 0.5;
-            ctx.shadowBlur = 0;
+      // OPTIMIZED: squared distance — no Math.sqrt
+      const maxSq = 10000; // 100*100
+      const ps = this.particles;
+      const len = ps.length;
+      ctx.lineWidth = 0.5;
+      ctx.strokeStyle = rgba(CYAN, 1);
+
+      for (let i = 0; i < len; i++) {
+        for (let j = i + 1; j < len; j++) {
+          const dx = ps[i].x - ps[j].x;
+          const dy = ps[i].y - ps[j].y;
+          const dSq = dx * dx + dy * dy;
+          if (dSq < maxSq) {
+            ctx.globalAlpha = (1 - dSq / maxSq) * 0.06;
             ctx.beginPath();
-            ctx.moveTo(a.x, a.y);
-            ctx.lineTo(b.x, b.y);
+            ctx.moveTo(ps[i].x, ps[i].y);
+            ctx.lineTo(ps[j].x, ps[j].y);
             ctx.stroke();
-            ctx.restore();
           }
         }
       }
@@ -326,7 +344,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
   /* ═══════════════════════════════════════════
-     NEON CHARACTER
+     NEON CHARACTER (optimized — minimal shadowBlur)
      ═══════════════════════════════════════════ */
 
   class NeonCharacter {
@@ -339,19 +357,16 @@ document.addEventListener('DOMContentLoaded', function() {
       this.flip = cfg.flip || false;
       this.opacity = cfg.opacity || 0.2;
       this.time = Math.random() * 100;
-      // Laser projectiles
       this.lasers = [];
     }
 
     update(dt) {
       this.time += dt;
-      // Update lasers
       for (let i = this.lasers.length - 1; i >= 0; i--) {
         this.lasers[i].x += this.lasers[i].vx * dt * 60;
         this.lasers[i].life -= dt;
         if (this.lasers[i].life <= 0) this.lasers.splice(i, 1);
       }
-      // Fire laser periodically for 'shoot' action
       if (this.action === 'shoot' && Math.sin(this.time * 3) > 0.98 && this.lasers.length < 3) {
         this.lasers.push({
           x: 0, y: 0, vx: this.flip ? -4 : 4, life: 1.5,
@@ -376,12 +391,9 @@ document.addEventListener('DOMContentLoaded', function() {
       ctx.lineJoin = 'round';
       ctx.strokeStyle = rgb(this.color);
       ctx.fillStyle = rgb(this.color);
-      ctx.shadowColor = rgba(this.color, 0.6);
-      ctx.shadowBlur = 12;
+      // OPTIMIZED: no shadowBlur for character body — just colored lines
 
       const pose = this._getPose(t);
-
-      // Draw body parts
       this._drawHead(ctx);
       this._drawBody(ctx, pose);
       this._drawLegs(ctx, pose);
@@ -389,57 +401,41 @@ document.addEventListener('DOMContentLoaded', function() {
       this._drawWeapon(ctx, pose);
 
       ctx.restore();
-
-      // Draw lasers in world space
       this._drawLasers(ctx, px, py, s);
     }
 
     _drawHead(ctx) {
-      // Head circle
       ctx.beginPath();
       ctx.arc(0, -55, 8, 0, Math.PI * 2);
       ctx.stroke();
-
-      // VR headset band
       ctx.lineWidth = 3;
       ctx.beginPath();
       ctx.moveTo(-10, -57);
       ctx.lineTo(10, -57);
       ctx.stroke();
-
-      // Glowing visor
+      // Visor — one glow line only
       ctx.lineWidth = 2;
-      ctx.shadowBlur = 18;
       ctx.beginPath();
       ctx.moveTo(-9, -55);
       ctx.lineTo(9, -55);
       ctx.stroke();
-      ctx.shadowBlur = 12;
     }
 
     _drawBody(ctx, pose) {
       const bob = pose.bodyBob || 0;
       const lean = pose.bodyLean || 0;
-
-      // Neck
       ctx.beginPath();
       ctx.moveTo(0, -47);
       ctx.lineTo(lean * 20, -42 + bob);
       ctx.stroke();
-
-      // Shoulders
       ctx.beginPath();
       ctx.moveTo(-12, -42 + bob);
       ctx.lineTo(12, -42 + bob);
       ctx.stroke();
-
-      // Torso
       ctx.beginPath();
       ctx.moveTo(lean * 10, -42 + bob);
       ctx.lineTo(0, -15 + bob);
       ctx.stroke();
-
-      // Hip
       ctx.beginPath();
       ctx.moveTo(-8, -15 + bob);
       ctx.lineTo(8, -15 + bob);
@@ -450,25 +446,19 @@ document.addEventListener('DOMContentLoaded', function() {
       const bob = pose.bodyBob || 0;
       const lul = pose.leftUpperLeg || 0;
       const rul = pose.rightUpperLeg || 0;
-
-      // Left leg
       const lkneeX = -8 + Math.sin(lul) * 18;
       const lkneeY = -15 + bob + Math.cos(lul) * 18;
       const lfootX = lkneeX + Math.sin(lul + 0.3) * 16;
       const lfootY = lkneeY + Math.cos(lul + 0.3) * 16;
-
       ctx.beginPath();
       ctx.moveTo(-8, -15 + bob);
       ctx.lineTo(lkneeX, lkneeY);
       ctx.lineTo(lfootX, lfootY);
       ctx.stroke();
-
-      // Right leg
       const rkneeX = 8 + Math.sin(rul) * 18;
       const rkneeY = -15 + bob + Math.cos(rul) * 18;
       const rfootX = rkneeX + Math.sin(rul + 0.3) * 16;
       const rfootY = rkneeY + Math.cos(rul + 0.3) * 16;
-
       ctx.beginPath();
       ctx.moveTo(8, -15 + bob);
       ctx.lineTo(rkneeX, rkneeY);
@@ -482,39 +472,30 @@ document.addEventListener('DOMContentLoaded', function() {
       const lla = pose.leftLowerArm || 0.5;
       const rua = pose.rightUpperArm || -0.3;
       const rla = pose.rightLowerArm || -0.5;
-
-      // Left arm
       const lelbowX = -12 + Math.sin(lua) * 16;
       const lelbowY = -42 + bob + Math.cos(lua) * 16;
       const lhandX = lelbowX + Math.sin(lua + lla) * 14;
       const lhandY = lelbowY + Math.cos(lua + lla) * 14;
-
       ctx.beginPath();
       ctx.moveTo(-12, -42 + bob);
       ctx.lineTo(lelbowX, lelbowY);
       ctx.lineTo(lhandX, lhandY);
       ctx.stroke();
-
-      // Right arm
       const relbowX = 12 + Math.sin(rua) * 16;
       const relbowY = -42 + bob + Math.cos(rua) * 16;
       const rhandX = relbowX + Math.sin(rua + rla) * 14;
       const rhandY = relbowY + Math.cos(rua + rla) * 14;
-
       ctx.beginPath();
       ctx.moveTo(12, -42 + bob);
       ctx.lineTo(relbowX, relbowY);
       ctx.lineTo(rhandX, rhandY);
       ctx.stroke();
-
-      // Store hand positions for weapon drawing
       this._lhand = { x: lhandX, y: lhandY };
       this._rhand = { x: rhandX, y: rhandY };
     }
 
     _drawWeapon(ctx, pose) {
       if (!pose.weapon || !this._rhand) return;
-
       const hx = this._rhand.x;
       const hy = this._rhand.y;
 
@@ -523,45 +504,42 @@ document.addEventListener('DOMContentLoaded', function() {
         const len = 35;
         const tipX = hx + Math.sin(sa - 1) * len;
         const tipY = hy - Math.cos(sa - 1) * len;
-
         // Hilt
         ctx.lineWidth = 3;
-        ctx.shadowBlur = 4;
         ctx.strokeStyle = rgba({ r: 180, g: 180, b: 180 }, this.opacity * 3);
-        ctx.beginPath();
-        ctx.moveTo(hx, hy);
         const hiltX = hx + Math.sin(sa - 1) * 6;
         const hiltY = hy - Math.cos(sa - 1) * 6;
+        ctx.beginPath();
+        ctx.moveTo(hx, hy);
         ctx.lineTo(hiltX, hiltY);
         ctx.stroke();
-
-        // Blade
+        // Blade — glow via thicker semi-transparent line instead of shadowBlur
+        ctx.strokeStyle = rgba(this.color, 0.3);
+        ctx.lineWidth = 10;
+        ctx.beginPath();
+        ctx.moveTo(hiltX, hiltY);
+        ctx.lineTo(tipX, tipY);
+        ctx.stroke();
+        // Blade core
         ctx.strokeStyle = rgb(this.color);
-        ctx.lineWidth = 4;
-        ctx.shadowBlur = 25;
-        ctx.shadowColor = rgba(this.color, 0.8);
+        ctx.lineWidth = 3;
         ctx.beginPath();
         ctx.moveTo(hiltX, hiltY);
         ctx.lineTo(tipX, tipY);
         ctx.stroke();
-
-        // Blade core (brighter)
+        // Bright center
         ctx.strokeStyle = `rgba(255,255,255,${this.opacity * 2})`;
-        ctx.lineWidth = 1.5;
+        ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.moveTo(hiltX, hiltY);
         ctx.lineTo(tipX, tipY);
         ctx.stroke();
-
         // Reset
         ctx.strokeStyle = rgb(this.color);
         ctx.lineWidth = 2;
-        ctx.shadowBlur = 12;
-        ctx.shadowColor = rgba(this.color, 0.6);
       }
 
       if (pose.weapon === 'blaster') {
-        // Small gun shape
         ctx.lineWidth = 2.5;
         ctx.beginPath();
         ctx.moveTo(hx, hy);
@@ -575,12 +553,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const lhx = this._lhand ? this._lhand.x : -20;
         const lhy = this._lhand ? this._lhand.y : -35;
         ctx.lineWidth = 3;
-        ctx.shadowBlur = 20;
         ctx.beginPath();
         ctx.arc(lhx + 8, lhy, 18, -Math.PI * 0.6, Math.PI * 0.6);
         ctx.stroke();
-
-        // Shield fill (semi-transparent)
         ctx.globalAlpha = this.opacity * 0.3;
         ctx.fillStyle = rgba(this.color, 0.2);
         ctx.fill();
@@ -596,8 +571,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const ly = py - 40 * s;
         ctx.strokeStyle = rgb(l.color);
         ctx.lineWidth = 2;
-        ctx.shadowColor = rgba(l.color, 0.8);
-        ctx.shadowBlur = 10;
         ctx.beginPath();
         ctx.moveTo(lx, ly);
         ctx.lineTo(lx + (this.flip ? -20 : 20), ly);
@@ -714,28 +687,25 @@ document.addEventListener('DOMContentLoaded', function() {
       this.isVisible = false;
       this.lastTime = 0;
 
-      // Create canvas
       this.canvas = document.createElement('canvas');
       this.canvas.setAttribute('aria-hidden', 'true');
       this.canvas.style.cssText =
         'position:absolute;inset:0;z-index:0;pointer-events:none;width:100%;height:100%;';
       section.insertBefore(this.canvas, section.firstChild);
 
-      // Ensure content is above canvas
       const container = section.querySelector('.container');
-      if (container) container.style.position = 'relative';
-      if (container) container.style.zIndex = '1';
+      if (container) { container.style.position = 'relative'; container.style.zIndex = '1'; }
 
       this.ctx = this.canvas.getContext('2d');
       this.resize();
 
-      // Create subsystems
       this.particles = new ThemedParticles(config.particles, this.w, this.h);
       this.characters = (config.characters || []).map(c => new NeonCharacter(c));
     }
 
     resize() {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      // OPTIMIZED: cap DPR at 1.5 (saves ~55% pixels vs DPR 2)
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
       const rect = this.section.getBoundingClientRect();
       this.w = rect.width;
       this.h = rect.height;
@@ -748,7 +718,6 @@ document.addEventListener('DOMContentLoaded', function() {
     update(time) {
       const dt = this.lastTime ? Math.min((time - this.lastTime) / 1000, 0.1) : 0.016;
       this.lastTime = time;
-
       this.particles.update();
       for (const ch of this.characters) ch.update(dt);
     }
@@ -762,32 +731,30 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
   /* ═══════════════════════════════════════════
-     SECTION EFFECTS — singleton manager
+     SECTION EFFECTS — singleton manager (30fps capped)
      ═══════════════════════════════════════════ */
 
   class SectionEffects {
     constructor() {
       this.canvases = [];
       this.rafId = null;
+      this.lastFrameTime = 0;
       this._init();
     }
 
     _init() {
-      // Create canvas for each configured section
       for (const [sectionId, config] of Object.entries(CONFIGS)) {
         const el = document.getElementById(sectionId);
         if (!el) continue;
         this.canvases.push(new SectionCanvas(el, config));
       }
 
-      // IntersectionObserver
       this._observer = new IntersectionObserver(
         entries => {
           for (const entry of entries) {
             const sc = this.canvases.find(c => c.section === entry.target);
             if (sc) sc.isVisible = entry.isIntersecting;
           }
-          // Start/stop loop
           const anyVisible = this.canvases.some(c => c.isVisible);
           if (anyVisible && !this.rafId) this._animate(performance.now());
           if (!anyVisible && this.rafId) {
@@ -802,31 +769,34 @@ document.addEventListener('DOMContentLoaded', function() {
         this._observer.observe(sc.section);
       }
 
-      // Resize handler
       let resizeTimer;
       window.addEventListener('resize', () => {
         clearTimeout(resizeTimer);
         resizeTimer = setTimeout(() => {
           for (const sc of this.canvases) sc.resize();
-        }, 200);
+        }, 250);
       }, { passive: true });
     }
 
     _animate(time) {
+      this.rafId = requestAnimationFrame(t => this._animate(t));
+
+      // OPTIMIZED: 30fps frame limiter
+      const elapsed = time - this.lastFrameTime;
+      if (elapsed < FRAME_INTERVAL) return;
+      this.lastFrameTime = time - (elapsed % FRAME_INTERVAL);
+
       for (const sc of this.canvases) {
         if (sc.isVisible) {
           sc.update(time);
           sc.draw();
         }
       }
-      this.rafId = requestAnimationFrame(t => this._animate(t));
     }
   }
 
-
   // ─── Initialize ───
   document.addEventListener('DOMContentLoaded', () => {
-    // Small delay to let other scripts init first
     setTimeout(() => {
       window.sectionEffects = new SectionEffects();
     }, 500);
