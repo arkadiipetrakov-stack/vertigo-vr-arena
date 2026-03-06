@@ -1,0 +1,402 @@
+/* ============================================
+   VERTIGO VR Arena - Animations & Keyframes
+   ============================================ */
+
+/* ===========================================
+   KEYFRAMES
+   =========================================== */
+
+@keyframes neon-pulse {
+  from {
+    box-shadow: 0 0 20px rgba(var(--neon-cyan-rgb), 0.3);
+  }
+  to {
+    box-shadow: 0 0 40px rgba(var(--neon-cyan-rgb), 0.6),
+      0 0 80px rgba(var(--neon-cyan-rgb), 0.2);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  40% {
+    transform: translateX(-50%) translateY(-12px);
+  }
+  60% {
+    transform: translateX(-50%) translateY(-6px);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%) rotate(45deg);
+  }
+  100% {
+    transform: translateX(200%) rotate(45deg);
+  }
+}
+
+@keyframes accent-shimmer {
+  0%, 100% { left: -100%; }
+  50% { left: 150%; }
+}
+
+@keyframes rotate-gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+@keyframes scan-line {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes icon-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-4px) rotate(2deg);
+  }
+  75% {
+    transform: translateY(2px) rotate(-1deg);
+  }
+}
+
+@keyframes star-fill {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in-down {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fade-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes glow-breathe {
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(var(--neon-cyan-rgb), 0.2);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(var(--neon-cyan-rgb), 0.4),
+      0 0 80px rgba(var(--neon-cyan-rgb), 0.15);
+  }
+}
+
+@keyframes text-glow {
+  0%,
+  100% {
+    text-shadow: 0 0 20px rgba(var(--neon-cyan-rgb), 0.3);
+  }
+  50% {
+    text-shadow: 0 0 40px rgba(var(--neon-cyan-rgb), 0.5),
+      0 0 80px rgba(var(--neon-cyan-rgb), 0.2);
+  }
+}
+
+@keyframes border-glow {
+  0%,
+  100% {
+    border-color: rgba(var(--neon-cyan-rgb), 0.2);
+  }
+  50% {
+    border-color: rgba(var(--neon-cyan-rgb), 0.5);
+  }
+}
+
+/* ===========================================
+   ANIMATION UTILITY CLASSES
+   =========================================== */
+
+.animate-neon-pulse {
+  animation: neon-pulse 2s ease-in-out infinite alternate;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient-shift 4s ease infinite;
+}
+
+.animate-icon-float {
+  animation: icon-float 4s ease-in-out infinite;
+}
+
+.animate-glow-breathe {
+  animation: glow-breathe 3s ease-in-out infinite;
+}
+
+.animate-text-glow {
+  animation: text-glow 3s ease-in-out infinite;
+}
+
+.animate-border-glow {
+  animation: border-glow 2s ease-in-out infinite;
+}
+
+/* ===========================================
+   HOVER TRANSITIONS
+   =========================================== */
+
+/* Cards */
+.card,
+.tariff-card,
+.benefit-card,
+.stat-card,
+.safety-card,
+.review-card {
+  transition: transform var(--transition-base),
+    box-shadow var(--transition-base),
+    border-color var(--transition-base);
+}
+
+/* Buttons */
+.btn {
+  transition: transform var(--transition-base),
+    box-shadow var(--transition-base),
+    filter var(--transition-base),
+    background var(--transition-base),
+    color var(--transition-base),
+    border-color var(--transition-base);
+}
+
+/* ===========================================
+   NAV LINK UNDERLINE ANIMATION
+   =========================================== */
+
+.nav__link {
+  position: relative;
+}
+
+/* Underline is defined in sections.css for .nav__link::after */
+
+/* ===========================================
+   GSAP PREPARATION - Scroll animations
+   =========================================== */
+
+[data-animate] {
+  opacity: 0;
+}
+
+[data-animate="fade-up"] {
+  transform: translateY(30px);
+}
+
+[data-animate="fade-down"] {
+  transform: translateY(-20px);
+}
+
+[data-animate="fade-left"] {
+  transform: translateX(-30px);
+}
+
+[data-animate="fade-right"] {
+  transform: translateX(30px);
+}
+
+[data-animate="scale"] {
+  transform: scale(0.9);
+}
+
+/* Active state when GSAP triggers */
+[data-animate].is-visible {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+/* Stagger delays for child items */
+[data-stagger] > *:nth-child(1) { transition-delay: 0s; }
+[data-stagger] > *:nth-child(2) { transition-delay: 0.1s; }
+[data-stagger] > *:nth-child(3) { transition-delay: 0.2s; }
+[data-stagger] > *:nth-child(4) { transition-delay: 0.3s; }
+[data-stagger] > *:nth-child(5) { transition-delay: 0.4s; }
+[data-stagger] > *:nth-child(6) { transition-delay: 0.5s; }
+
+/* ===========================================
+   SECTION GRADIENT TRANSITIONS
+   =========================================== */
+
+/* Additional section blending via gradients - augments layout.css */
+/* Creates subtle iridescent glow between sections */
+
+.section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(var(--neon-cyan-rgb), 0.15),
+    rgba(var(--neon-violet-rgb), 0.1),
+    transparent
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Override for hero - no top line */
+#hero::before {
+  display: none;
+}
+
+/* ===========================================
+   LOADING STATE ANIMATIONS
+   =========================================== */
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.03) 0%,
+    rgba(255, 255, 255, 0.08) 50%,
+    rgba(255, 255, 255, 0.03) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+  border-radius: var(--radius-sm);
+}
+
+/* ===========================================
+   COUNTER ANIMATION (number tick up)
+   =========================================== */
+
+.counter-animate {
+  display: inline-block;
+  transition: all 0.4s ease;
+}
+
+/* ===========================================
+   REDUCED MOTION
+   =========================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  [data-animate] {
+    opacity: 1;
+    transform: none;
+  }
+
+  .hero__scroll {
+    animation: none;
+  }
+
+  .tariff-card--max::before {
+    animation: none;
+  }
+
+  .animate-neon-pulse,
+  .animate-float,
+  .animate-gradient,
+  .animate-icon-float,
+  .animate-glow-breathe,
+  .animate-text-glow,
+  .animate-border-glow {
+    animation: none;
+  }
+}

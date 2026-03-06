@@ -1,0 +1,70 @@
+/* ============================================
+   VERTIGO VR Arena - Design Tokens & Variables
+   ============================================ */
+
+:root {
+  /* Background Hierarchy */
+  --bg-primary: #0a0a1a;
+  --bg-secondary: #0d0d2b;
+  --bg-tertiary: #0f0f1e;
+  --bg-card: #12122a;
+  --bg-card-hover: #1a1a3e;
+
+  /* Neon Accents */
+  --neon-cyan: #00f0ff;
+  --neon-cyan-rgb: 0, 240, 255;
+  --neon-violet: #8b5cf6;
+  --neon-violet-rgb: 139, 92, 246;
+  --neon-pink: #f472b6;
+  --neon-pink-rgb: 244, 114, 182;
+
+  /* Text */
+  --text-primary: #f0f0f5;
+  --text-secondary: #a0a0b8;
+  --text-muted: #6b6b80;
+  --text-accent: var(--neon-cyan);
+
+  /* Functional */
+  --success: #22c55e;
+  --error: #ef4444;
+
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, var(--neon-cyan), var(--neon-violet));
+  --gradient-hero: linear-gradient(180deg, #0a0a1a 0%, #0d0d2b 50%, #0a0e1a 100%);
+
+  /* Glassmorphism */
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-blur: 10px;
+
+  /* Glow System */
+  --glow-cyan-sm: 0 0 10px rgba(var(--neon-cyan-rgb), 0.3);
+  --glow-cyan-md: 0 0 20px rgba(var(--neon-cyan-rgb), 0.4), 0 0 40px rgba(var(--neon-cyan-rgb), 0.1);
+  --glow-cyan-lg: 0 0 30px rgba(var(--neon-cyan-rgb), 0.5), 0 0 60px rgba(var(--neon-cyan-rgb), 0.2), 0 0 100px rgba(var(--neon-cyan-rgb), 0.1);
+  --glow-violet-md: 0 0 20px rgba(var(--neon-violet-rgb), 0.4), 0 0 40px rgba(var(--neon-violet-rgb), 0.1);
+
+  /* Typography */
+  --font-heading: 'Unbounded', sans-serif;
+  --font-body: 'Manrope', sans-serif;
+  --fs-hero: clamp(1.75rem, 5vw, 3.5rem);
+  --fs-h2: clamp(1.5rem, 3.5vw, 2.5rem);
+  --fs-h3: clamp(1.125rem, 2vw, 1.5rem);
+  --fs-body: clamp(0.9375rem, 1.2vw, 1.125rem);
+  --fs-small: clamp(0.8125rem, 1vw, 0.9375rem);
+
+  /* Spacing */
+  --section-padding: clamp(60px, 8vw, 120px);
+  --container-max: 1280px;
+  --container-padding: clamp(16px, 4vw, 40px);
+
+  /* Transitions */
+  --transition-fast: 0.2s ease;
+  --transition-base: 0.3s ease;
+  --transition-slow: 0.5s ease;
+
+  /* Border Radius */
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-full: 9999px;
+}

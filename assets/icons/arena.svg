@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" fill="none" stroke="#00f0ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Floor / room perspective -->
+  <path d="M8 46 L32 56 L56 46 L56 18 L32 8 L8 18 Z"/>
+  <!-- Top face -->
+  <path d="M8 18 L32 28 L56 18"/>
+  <!-- Middle vertical -->
+  <line x1="32" y1="28" x2="32" y2="56"/>
+  <!-- Boundary markers on floor -->
+  <circle cx="20" cy="38" r="1.5" fill="#00f0ff"/>
+  <circle cx="32" cy="42" r="1.5" fill="#00f0ff"/>
+  <circle cx="44" cy="38" r="1.5" fill="#00f0ff"/>
+  <!-- Person silhouette in center -->
+  <circle cx="32" cy="18" r="2.5"/>
+  <line x1="32" y1="20.5" x2="32" y2="26"/>
+</svg>

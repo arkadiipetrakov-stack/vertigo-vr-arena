@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VERTIGO VR Arena — День рождения в VR для детей в Саратове</title>
+  <meta name="description" content="День рождения в VR для детей 7-12 лет в Саратове. Полное погружение, всё включено. От 10 000 ₽. Забронируйте дату!">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="VERTIGO VR Arena — День рождения в VR для детей">
+  <meta property="og:description" content="День рождения в VR для детей 7-12 лет в Саратове. Полное погружение, всё включено. От 10 000 ₽. Забронируйте дату!">
+  <meta property="og:image" content="assets/og-cover.jpg">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ru_RU">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/variables.css?v=8">
+  <link rel="stylesheet" href="css/base.css?v=8">
+  <link rel="stylesheet" href="css/layout.css?v=8">
+  <link rel="stylesheet" href="css/components.css?v=8">
+  <link rel="stylesheet" href="css/sections.css?v=8">
+  <link rel="stylesheet" href="css/animations.css?v=8">
+  <link rel="stylesheet" href="css/responsive.css?v=8">
+
+  <style>html{scroll-behavior:smooth}</style>
+</head>
+<body>
+
+  <!-- ===== NAVIGATION ===== -->
+  <nav class="nav" id="header">
+    <div class="container nav__container">
+      <a href="#hero" class="nav__logo" aria-label="VERTIGO — на главную">
+        <span class="nav__logo-text">VERTIGO</span>
+      </a>
+
+      <ul class="nav__links" id="nav-list">
+        <li class="nav__item"><a href="#benefits" class="nav__link">Преимущества</a></li>
+        <li class="nav__item"><a href="#how-it-works" class="nav__link">Как проходит</a></li>
+        <li class="nav__item"><a href="#tariffs" class="nav__link">Тарифы</a></li>
+        <li class="nav__item"><a href="#reviews" class="nav__link">Отзывы</a></li>
+        <li class="nav__item"><a href="#faq" class="nav__link">FAQ</a></li>
+      </ul>
+
+      <div class="nav__actions">
+        <a href="tel:89027100210" class="nav__phone">
+          <svg class="nav__phone-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <span>8 902 710 02 10</span>
+        </a>
+        <a href="#booking" class="btn btn--primary nav__cta">Забронировать</a>
+      </div>
+
+      <button class="nav__hamburger" id="nav-burger" aria-label="Открыть меню" aria-expanded="false">
+        <span class="nav__hamburger-line"></span>
+        <span class="nav__hamburger-line"></span>
+        <span class="nav__hamburger-line"></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile menu overlay -->
+  <div class="nav__mobile" id="nav-mobile">
+    <a href="#benefits" class="nav__mobile-link">Преимущества</a>
+    <a href="#how-it-works" class="nav__mobile-link">Как проходит</a>
+    <a href="#tariffs" class="nav__mobile-link">Тарифы</a>
+    <a href="#reviews" class="nav__mobile-link">Отзывы</a>
+    <a href="#faq" class="nav__mobile-link">FAQ</a>
+    <a href="#booking" class="btn btn--primary nav__mobile-cta">Забронировать</a>
+  </div>
+
+
+  <main>
+    <!-- ===== HERO ===== -->
+    <section class="hero" id="hero">
+      <canvas id="particles-canvas" class="hero__canvas" aria-hidden="true"></canvas>
+
+      <div class="hero__content container">
+        <h1 class="hero__title">День&nbsp;рождения который ваш ребёнок будет вспоминать <span class="hero__title-accent">годами</span></h1>
+        <p class="hero__subtitle">Полное погружение в&nbsp;VR для 10–16&nbsp;гостей. Всё включено&nbsp;— от&nbsp;игр до&nbsp;праздничной зоны</p>
+
+        <div class="hero__ctas">
+          <a href="#booking" class="btn btn--primary btn--lg">Забронировать дату</a>
+          <a href="#tariffs" class="btn btn--secondary btn--lg">Смотреть тарифы</a>
+        </div>
+
+        <div class="hero__trust">
+          <span class="hero__trust-item">5+ лет</span>
+          <span class="hero__trust-divider" aria-hidden="true"></span>
+          <span class="hero__trust-item">1 000+ праздников</span>
+          <span class="hero__trust-divider" aria-hidden="true"></span>
+          <span class="hero__trust-item">Оценка 5.0</span>
+        </div>
+      </div>
+
+      <div class="hero__scroll" aria-hidden="true">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </section>
+
+
+    <!-- ===== SOCIAL PROOF BAR ===== -->
+    <section class="social-proof" id="social-proof" data-animate-group>
+      <div class="container">
+        <div class="stats__grid">
+          <div class="stat-card" data-animate="up">
+            <div class="stat-card__icon">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <span class="stat-card__number" data-target="5" data-suffix="+">5+</span>
+            <span class="stat-card__label">лет проводим праздники в&nbsp;Саратове</span>
+          </div>
+
+          <div class="stat-card" data-animate="up">
+            <div class="stat-card__icon">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <span class="stat-card__number" data-target="1000" data-suffix="+">1 000+</span>
+            <span class="stat-card__label">проведённых праздников</span>
+          </div>
+
+          <div class="stat-card" data-animate="up">
+            <div class="stat-card__icon">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+            <span class="stat-card__number" data-target="5.0">5.0</span>
+            <span class="stat-card__label">средняя оценка на&nbsp;Яндекс и&nbsp;2ГИС</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ===== WHY VR BIRTHDAY ===== -->
+    <section class="benefits section" id="benefits">
+      <div class="container">
+        <h2 class="section__title" data-animate="up">Почему 87% детей просят VR-праздник <span class="section__title-accent">снова</span></h2>
+
+        <div class="benefits__grid" data-animate-group>
+          <article class="benefit-card" data-animate="up">
+            <div class="benefit-card__icon">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14z"/><path d="M7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>
+            </div>
+            <h3 class="benefit-card__title">Восторг каждого ребёнка</h3>
+            <p class="benefit-card__text">Оператор подбирает игры по&nbsp;возрасту и&nbsp;характеру. Застенчивые дети раскрываются, активные&nbsp;— направляют энергию.</p>
+          </article>
+
+          <article class="benefit-card" data-animate="up">
+            <div class="benefit-card__icon">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </div>
+            <h3 class="benefit-card__title">Всё включено&nbsp;— от&nbsp;игр до&nbsp;посуды</h3>
+            <p class="benefit-card__text">Зона отдыха с&nbsp;PS5, чай, кофе, праздничная посуда, цифровые приглашения. Вам остаётся только привезти торт.</p>
+          </article>
+
+          <article class="benefit-card" data-animate="up">
+            <div class="benefit-card__icon">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <h3 class="benefit-card__title">Безопасность на&nbsp;первом месте</h3>
+            <p class="benefit-card__text">Oculus Quest&nbsp;3, дезинфекция перед каждой сессией, постоянное наблюдение инструктора. Минимальный возраст&nbsp;— 7&nbsp;лет.</p>
+          </article>
+
+          <article class="benefit-card" data-animate="up">
+            <div class="benefit-card__icon">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            </div>
+            <h3 class="benefit-card__title">Фото и&nbsp;видео на&nbsp;память</h3>
+            <p class="benefit-card__text">Яркие моменты VR-батлов. Контент для сторис, который соберёт сотни лайков.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ===== HOW IT WORKS ===== -->
+    <section class="how-it-works section" id="how-it-works">
+      <div class="container">
+        <h2 class="section__title" data-animate="up">5&nbsp;шагов к&nbsp;идеальному празднику&nbsp;— <span class="section__title-accent">без вашего стресса</span></h2>
+
+        <div class="timeline" data-animate-group>
+          <div class="timeline__line-container" aria-hidden="true">
+            <div class="timeline__line">
+              <div class="timeline__line-progress"></div>
+            </div>
+          </div>
+
+          <div class="timeline__step timeline__step--left" data-animate="up">
+            <div class="timeline__node" aria-hidden="true"></div>
+            <div class="timeline__content">
+              <span class="timeline__number">01</span>
+              <h3 class="timeline__title">Бронируете дату</h3>
+              <p class="timeline__text">Выбираете пакет, дату и&nbsp;количество гостей. Мы подтверждаем за&nbsp;15&nbsp;минут.</p>
+            </div>
+          </div>
+
+          <div class="timeline__step timeline__step--right" data-animate="up">
+            <div class="timeline__node" aria-hidden="true"></div>
+            <div class="timeline__content">
+              <span class="timeline__number">02</span>
+              <h3 class="timeline__title">Мы готовим всё</h3>
+              <p class="timeline__text">Подбираем игры по&nbsp;возрасту, готовим арену, зону отдыха и&nbsp;оборудование.</p>
+            </div>
+          </div>
+
+          <div class="timeline__step timeline__step--left" data-animate="up">
+            <div class="timeline__node" aria-hidden="true"></div>
+            <div class="timeline__content">
+              <span class="timeline__number">03</span>
+              <h3 class="timeline__title">Гости погружаются в&nbsp;VR</h3>
+              <p class="timeline__text">Персональный инструктор проводит брифинг и&nbsp;запускает приключение.</p>
+            </div>
+          </div>
+
+          <div class="timeline__step timeline__step--right" data-animate="up">
+            <div class="timeline__node" aria-hidden="true"></div>
+            <div class="timeline__content">
+              <span class="timeline__number">04</span>
+              <h3 class="timeline__title">Отдых и&nbsp;общение</h3>
+              <p class="timeline__text">PS5, настольные игры, чай-кофе. Дети отдыхают, родители расслабляются.</p>
+            </div>
+          </div>
+
+          <div class="timeline__step timeline__step--left" data-animate="up">
+            <div class="timeline__node" aria-hidden="true"></div>
+            <div class="timeline__content">
+              <span class="timeline__number">05</span>
+              <h3 class="timeline__title">Яркие воспоминания</h3>
+              <p class="timeline__text">Фото, видео, восторженные рассказы друзьям. Лучший день рождения.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ===== TARIFFS ===== -->
+    <section class="tariffs section" id="tariffs">
+      <div class="container">
+        <h2 class="section__title" data-animate="up">Выберите формат <span class="section__title-accent">праздника</span></h2>
+        <p class="section__subtitle" data-animate="up">От камерного до грандиозного</p>
+
+        <div class="tariffs__grid" data-animate-group>
+
+          <!-- МАКСИМУМ (FEATURED) -->
+          <article class="tariff-card tariff-card--max" data-animate="up">
+            <span class="tariff-card__badge">Хит</span>
+            <h3 class="tariff-card__name">МАКСИМУМ</h3>
+            <div class="tariff-card__price">от 18 000 <span class="tariff-card__currency">&#8381;</span></div>
+            <ul class="tariff-card__features">
+              <li class="tariff-card__feature"><svg class="tariff-card__check" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>До 16 игроков</li>
+              <li class="tariff-card__feature"><svg class="tariff-card__check" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>2 часа VR-арена (до 12 чел.)</li>
+              <li class="tariff-card__feature"><svg class="tariff-card__check" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>2 часа стационарная зона (до 4 чел.)</li>
+              <li class="tariff-card__feature"><svg class="tariff-card__check" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Комната отдыха</li>
+              <li class="tariff-card__feature"><svg class="tariff-card__check" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>PS5, настольные игры</li>
+              <li class="tariff-card__feature"><svg class="tariff-card__check" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Праздничная посуда</li>
+              <li class="tariff-card__feature"><svg class="tariff-card__check" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Напитки (вода, чай, кофе)</li>
+              <li class="tariff-card__feature"><svg class="tariff-card__check" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Персональный инструктор-ведущий</li>
+              <li class="tariff-card__feature"><svg class="tariff-card__check" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Цифровые приглашения</li>
+              <li class="tariff-card__feature feature--highlight"><svg class="tariff-card__check" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Подарок имениннику</li>
+            </ul>
+            <a href="#booking" class="btn btn--primary tariff-card__cta">Забронировать МАКСИМУМ</a>
+          </article>
+
+          <!-- ОПТИМАЛЬНЫЙ -->
+          <article class="tariff-card tariff-card--optimal" data-animate="up">
+            <h3 class="tariff-card__name">ОПТИМАЛЬНЫЙ</h3>
+            <div class="tariff-card__price">от 14 000 <span class="tariff-card__currency">&#8381;</span></div>
+            <ul class="tariff-card__features">
+              <li class="tariff-card__feature"><svg class="tariff-card__check" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>До 12 игроков</li>
+              <li class="tariff-card__feature"><svg class="tariff-card__check" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>2 часа VR-арена</li>
+              <li class="tariff-card__feature"><svg class="tariff-card__check" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Комната отдыха</li>
+              <li class="tariff-card__feature"><svg class="tariff-card__check" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>PS5, настольные игры</li>
+              <li class="tariff-card__feature"><svg class="tariff-card__check" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Праздничная посуда</li>
+              <li class="tariff-card__feature"><svg class="tariff-card__check" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Напитки</li>
+              <li class="tariff-card__feature"><svg class="tariff-card__check" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Персональный инструктор-ведущий</li>
+              <li class="tariff-card__feature"><svg class="tariff-card__check" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Цифровые приглашения</li>
+            </ul>
+            <a href="#booking" class="btn btn--secondary tariff-card__cta">Выбрать ОПТИМАЛЬНЫЙ</a>
+          </article>
+
+          <!-- МИНИМАЛЬНЫЙ -->
+          <article class="tariff-card tariff-card--min" data-animate="up">
+            <h3 class="tariff-card__name">МИНИМАЛЬНЫЙ</h3>
+            <div class="tariff-card__price">от 10 000 <span class="tariff-card__currency">&#8381;</span></div>
+            <ul class="tariff-card__features">
+              <li class="tariff-card__feature"><svg class="tariff-card__check" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>До 10 игроков</li>
+              <li class="tariff-card__feature"><svg class="tariff-card__check" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>1 час VR-арена</li>
+              <li class="tariff-card__feature"><svg class="tariff-card__check" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Комната отдыха</li>
+              <li class="tariff-card__feature"><svg class="tariff-card__check" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>PS5, настольные игры</li>
+              <li class="tariff-card__feature"><svg class="tariff-card__check" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Праздничная посуда</li>
+              <li class="tariff-card__feature"><svg class="tariff-card__check" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Напитки</li>
+              <li class="tariff-card__feature"><svg class="tariff-card__check" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Персональный инструктор-ведущий</li>
+              <li class="tariff-card__feature"><svg class="tariff-card__check" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Цифровые приглашения</li>
+            </ul>
+            <a href="#booking" class="btn btn--tertiary tariff-card__cta">Выбрать МИНИМАЛЬНЫЙ</a>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ===== SAFETY & TECH ===== -->
+    <section class="safety section" id="safety">
+      <div class="container">
+        <h2 class="section__title" data-animate="up">Технологии, которым доверяют <span class="section__title-accent">1&nbsp;000+ родителей</span> Саратова</h2>
+
+        <div class="safety__grid" data-animate-group>
+          <article class="safety-card" data-animate="up">
+            <div class="safety-card__icon">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="10" rx="3"/><path d="M7 7V5a5 5 0 0 1 10 0v2"/><circle cx="12" cy="12" r="1.5"/></svg>
+            </div>
+            <h3 class="safety-card__title">Oculus Quest 3</h3>
+            <p class="safety-card__text">Оборудование последнего поколения. Лёгкое, удобное, с&nbsp;точной калибровкой под каждого ребёнка.</p>
+          </article>
+
+          <article class="safety-card" data-animate="up">
+            <div class="safety-card__icon">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M8 12s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/><path d="M7 3.34V6h3l1-3"/><path d="M17 3.34V6h-3l-1-3"/></svg>
+            </div>
+            <h3 class="safety-card__title">Дезинфекция</h3>
+            <p class="safety-card__text">Каждый шлем и&nbsp;контроллер обрабатываются антисептиком до&nbsp;и&nbsp;после каждой сессии.</p>
+          </article>
+
+          <article class="safety-card" data-animate="up">
+            <div class="safety-card__icon">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><path d="M12 11l-1 5h2l-1-5z"/></svg>
+            </div>
+            <h3 class="safety-card__title">Инструктор рядом</h3>
+            <p class="safety-card__text">Персональный ведущий следит за&nbsp;каждым ребёнком, помогает и&nbsp;контролирует процесс.</p>
+          </article>
+
+          <article class="safety-card" data-animate="up">
+            <div class="safety-card__icon">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 3v18"/></svg>
+            </div>
+            <h3 class="safety-card__title">Просторная арена</h3>
+            <p class="safety-card__text">Чистое, проветриваемое пространство. Мягкое покрытие пола. Безопасные границы зоны игры.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ===== REVIEWS ===== -->
+    <section class="reviews section" id="reviews">
+      <div class="container">
+        <h2 class="section__title" data-animate="up">Что говорят родители <span class="section__title-accent">после праздника</span></h2>
+
+        <div class="reviews__wrapper" data-animate="up">
+          <button class="reviews__arrow reviews__arrow--prev" aria-label="Предыдущий отзыв">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+
+          <div class="reviews__track">
+            <article class="review-card">
+              <div class="review-card__header">
+                <span class="review-card__name">Елена М.</span>
+                <span class="review-card__child">Ребёнку 9 лет</span>
+              </div>
+              <div class="review-card__stars" aria-label="Оценка: 5 из 5">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              </div>
+              <blockquote class="review-card__text">Сын до&nbsp;сих пор рассказывает друзьям! Инструктор Артём был великолепен&nbsp;— подобрал игры идеально для возраста.</blockquote>
+              <span class="review-card__source">Яндекс Карты</span>
+            </article>
+
+            <article class="review-card">
+              <div class="review-card__header">
+                <span class="review-card__name">Дмитрий К.</span>
+                <span class="review-card__child">Ребёнку 11 лет</span>
+              </div>
+              <div class="review-card__stars" aria-label="Оценка: 5 из 5">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              </div>
+              <blockquote class="review-card__text">Третий год подряд отмечаем здесь. Дети в&nbsp;восторге, а&nbsp;мы спокойны за&nbsp;безопасность.</blockquote>
+              <span class="review-card__source">2ГИС</span>
+            </article>
+
+            <article class="review-card">
+              <div class="review-card__header">
+                <span class="review-card__name">Анна С.</span>
+                <span class="review-card__child">Ребёнку 8 лет</span>
+              </div>
+              <div class="review-card__stars" aria-label="Оценка: 5 из 5">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              </div>
+              <blockquote class="review-card__text">Дочка была в&nbsp;таком восторге, что попросила на&nbsp;следующий год снова. Организация на&nbsp;высшем уровне.</blockquote>
+              <span class="review-card__source">Яндекс Карты</span>
+            </article>
+
+            <article class="review-card">
+              <div class="review-card__header">
+                <span class="review-card__name">Максим Р.</span>
+                <span class="review-card__child">Ребёнку 10 лет</span>
+              </div>
+              <div class="review-card__stars" aria-label="Оценка: 5 из 5">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              </div>
+              <blockquote class="review-card__text">Лучший день рождения за&nbsp;все годы! Ребята-инструкторы&nbsp;— просто огонь.</blockquote>
+              <span class="review-card__source">2ГИС</span>
+            </article>
+
+            <article class="review-card">
+              <div class="review-card__header">
+                <span class="review-card__name">Ольга В.</span>
+                <span class="review-card__child">Ребёнку 7 лет</span>
+              </div>
+              <div class="review-card__stars" aria-label="Оценка: 5 из 5">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              </div>
+              <blockquote class="review-card__text">Переживала, что дочка маленькая. Но инструктор подобрал лёгкие игры&nbsp;— она была счастлива!</blockquote>
+              <span class="review-card__source">Яндекс Карты</span>
+            </article>
+
+            <article class="review-card">
+              <div class="review-card__header">
+                <span class="review-card__name">Игорь Т.</span>
+                <span class="review-card__child">Ребёнку 12 лет</span>
+              </div>
+              <div class="review-card__stars" aria-label="Оценка: 5 из 5">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              </div>
+              <blockquote class="review-card__text">Сыну и&nbsp;его друзьям понравились командные VR-батлы. Говорит, это лучше любого квеста.</blockquote>
+              <span class="review-card__source">2ГИС</span>
+            </article>
+          </div>
+
+          <button class="reviews__arrow reviews__arrow--next" aria-label="Следующий отзыв">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+
+        <div class="reviews__dots" aria-label="Навигация по отзывам">
+          <button class="reviews__dot reviews__dot--active" aria-label="Отзыв 1"></button>
+          <button class="reviews__dot" aria-label="Отзыв 2"></button>
+          <button class="reviews__dot" aria-label="Отзыв 3"></button>
+          <button class="reviews__dot" aria-label="Отзыв 4"></button>
+          <button class="reviews__dot" aria-label="Отзыв 5"></button>
+          <button class="reviews__dot" aria-label="Отзыв 6"></button>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ===== FAQ ===== -->
+    <section class="faq section" id="faq">
+      <div class="container">
+        <h2 class="section__title" data-animate="up">Ответы на&nbsp;вопросы, которые задают <span class="section__title-accent">9&nbsp;из&nbsp;10&nbsp;родителей</span></h2>
+
+        <div class="faq__list" data-animate-group>
+
+          <details class="faq__item" data-animate="up">
+            <summary class="faq__question">
+              <span class="faq__question-text">Безопасен ли VR для детей? С&nbsp;какого возраста можно играть?</span>
+              <span class="faq__icon" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </span>
+            </summary>
+            <div class="faq__answer">
+              <p>Да, полностью безопасен. Мы используем Oculus Quest&nbsp;3&nbsp;— лёгкие, удобные шлемы последнего поколения. Минимальный возраст&nbsp;— 7&nbsp;лет. Каждый ребёнок находится под наблюдением персонального инструктора.</p>
+            </div>
+          </details>
+
+          <details class="faq__item" data-animate="up">
+            <summary class="faq__question">
+              <span class="faq__question-text">Можно ли принести свою еду и&nbsp;торт?</span>
+              <span class="faq__icon" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </span>
+            </summary>
+            <div class="faq__answer">
+              <p>Конечно! У&nbsp;нас есть полностью оборудованная зона отдыха с&nbsp;посудой, стаканами и&nbsp;салфетками. Вам нужно привезти только торт и&nbsp;угощения.</p>
+            </div>
+          </details>
+
+          <details class="faq__item" data-animate="up">
+            <summary class="faq__question">
+              <span class="faq__question-text">Как проходит дезинфекция оборудования?</span>
+              <span class="faq__icon" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </span>
+            </summary>
+            <div class="faq__answer">
+              <p>Каждый шлем и&nbsp;контроллер обрабатываются антисептическим средством до&nbsp;и&nbsp;после каждой сессии. Мы используем специальные гигиенические маски для VR-шлемов.</p>
+            </div>
+          </details>
+
+          <details class="faq__item" data-animate="up">
+            <summary class="faq__question">
+              <span class="faq__question-text">Сколько детей могут играть одновременно?</span>
+              <span class="faq__icon" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </span>
+            </summary>
+            <div class="faq__answer">
+              <p>Зависит от&nbsp;пакета: Минимальный&nbsp;— до&nbsp;10, Оптимальный&nbsp;— до&nbsp;12, Максимальный&nbsp;— до&nbsp;16&nbsp;детей. В&nbsp;VR-арене одновременно играют до&nbsp;12&nbsp;человек, остальные&nbsp;— в&nbsp;зоне PS5.</p>
+            </div>
+          </details>
+
+          <details class="faq__item" data-animate="up">
+            <summary class="faq__question">
+              <span class="faq__question-text">Будет ли персональный инструктор?</span>
+              <span class="faq__icon" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </span>
+            </summary>
+            <div class="faq__answer">
+              <p>Да, к&nbsp;каждому празднику прикрепляется персональный инструктор-ведущий. Он&nbsp;проводит брифинг, помогает освоить VR, следит за&nbsp;безопасностью и&nbsp;создаёт праздничную атмосферу.</p>
+            </div>
+          </details>
+
+          <details class="faq__item" data-animate="up">
+            <summary class="faq__question">
+              <span class="faq__question-text">Какие игры доступны? Можно ли выбрать?</span>
+              <span class="faq__icon" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </span>
+            </summary>
+            <div class="faq__answer">
+              <p>У&nbsp;нас более 30&nbsp;VR-игр для разных возрастов. Инструктор подберёт игры исходя из&nbsp;возраста и&nbsp;интересов группы. Есть командные батлы, приключения, спортивные и&nbsp;творческие игры.</p>
+            </div>
+          </details>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ===== FINAL CTA / BOOKING ===== -->
+    <section class="booking section" id="booking">
+      <div class="container">
+        <h2 class="section__title" data-animate="up">Забронируйте <span class="section__title-accent">дату</span></h2>
+        <p class="section__subtitle" data-animate="up">Свободных слотов на&nbsp;выходные всё меньше</p>
+
+        <div class="booking__grid" data-animate="up">
+          <div class="booking__info">
+            <ul class="booking__benefits">
+              <li class="booking__benefit">
+                <svg class="booking__benefit-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <span>Подтверждение за&nbsp;15&nbsp;минут</span>
+              </li>
+              <li class="booking__benefit">
+                <svg class="booking__benefit-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                <span>Бесплатная отмена за&nbsp;48&nbsp;часов</span>
+              </li>
+              <li class="booking__benefit">
+                <svg class="booking__benefit-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                <span>Персональный подбор игр</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="booking__form-wrapper">
+            <form class="booking__form" id="booking-form" novalidate>
+              <div class="form__group">
+                <label class="form__label" for="booking-name">Имя</label>
+                <input class="form__input" type="text" id="booking-name" name="name" required placeholder="Ваше имя" autocomplete="given-name">
+              </div>
+
+              <div class="form__group">
+                <label class="form__label" for="booking-phone">Телефон</label>
+                <input class="form__input" type="tel" id="booking-phone" name="phone" required placeholder="+7 (___) ___-__-__" autocomplete="tel">
+              </div>
+
+              <button class="btn btn--primary booking__submit" type="submit">Забронировать праздник</button>
+            </form>
+
+            <div class="booking__messengers">
+              <span class="booking__messengers-label">Или напишите нам:</span>
+              <div class="booking__messengers-links">
+                <a href="https://wa.me/79027100210" class="booking__messenger booking__messenger--wa" target="_blank" rel="noopener noreferrer" aria-label="Написать в WhatsApp">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                  <span>WhatsApp</span>
+                </a>
+                <a href="https://t.me/vertigovr_saratov" class="booking__messenger booking__messenger--tg" target="_blank" rel="noopener noreferrer" aria-label="Написать в Telegram">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                  <span>Telegram</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer" id="contacts">
+    <div class="container">
+      <div class="footer__grid">
+
+        <div class="footer__brand">
+          <a href="#hero" class="footer__logo" aria-label="VERTIGO VR — на главную">
+            <span class="footer__logo-text">VERTIGO VR</span>
+          </a>
+          <address class="footer__address">
+            Саратов, пр-т Петра Столыпина 27,<br>ТЦ &laquo;Манеж&raquo;, 3&nbsp;этаж
+          </address>
+          <a href="tel:89027100210" class="footer__phone">8 902 710 02 10</a>
+          <span class="footer__hours">Ежедневно 10:00–22:00</span>
+        </div>
+
+        <nav class="footer__nav" aria-label="Навигация в подвале">
+          <ul class="footer__nav-list">
+            <li><a href="#tariffs" class="footer__nav-link">Тарифы</a></li>
+            <li><a href="#reviews" class="footer__nav-link">Отзывы</a></li>
+            <li><a href="#faq" class="footer__nav-link">FAQ</a></li>
+            <li><a href="#booking" class="footer__nav-link">Контакты</a></li>
+          </ul>
+        </nav>
+
+        <div class="footer__social">
+          <a href="https://t.me/vertigovr_saratov" class="footer__social-link" target="_blank" rel="noopener noreferrer" aria-label="Telegram">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+          </a>
+          <a href="https://vk.com/vertigovr_saratov" class="footer__social-link" target="_blank" rel="noopener noreferrer" aria-label="ВКонтакте">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M15.684 0H8.316C1.592 0 0 1.592 0 8.316v7.368C0 22.408 1.592 24 8.316 24h7.368C22.408 24 24 22.408 24 15.684V8.316C24 1.592 22.391 0 15.684 0zm3.692 17.123h-1.744c-.66 0-.862-.525-2.049-1.714-1.033-1.01-1.49-1.135-1.744-1.135-.356 0-.458.102-.458.593v1.575c0 .424-.135.678-1.253.678-1.846 0-3.896-1.12-5.335-3.202C4.624 10.857 4.03 8.57 4.03 8.096c0-.254.102-.491.593-.491h1.744c.44 0 .61.203.78.677.864 2.49 2.303 4.675 2.896 4.675.22 0 .322-.102.322-.66V9.721c-.068-1.186-.695-1.287-.695-1.71 0-.203.17-.407.44-.407h2.744c.372 0 .508.203.508.643v3.473c0 .372.17.508.271.508.22 0 .407-.136.814-.542 1.27-1.422 2.167-3.607 2.167-3.607.119-.254.322-.491.763-.491h1.744c.525 0 .644.27.525.643-.22 1.017-2.354 4.031-2.354 4.031-.186.305-.254.44 0 .78.186.254.796.779 1.203 1.253.745.847 1.32 1.558 1.473 2.049.17.474-.085.716-.576.716z"/></svg>
+          </a>
+          <a href="https://wa.me/79027100210" class="footer__social-link" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </a>
+          <a href="https://instagram.com/vertigovr_saratov" class="footer__social-link" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 1 0 0-12.324zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405a1.441 1.441 0 0 1-2.88 0 1.441 1.441 0 0 1 2.88 0z"/></svg>
+          </a>
+        </div>
+
+      </div>
+
+      <div class="footer__bottom">
+        <span class="footer__copy">&copy; 2021–2026 VERTIGO VR Arena</span>
+        <a href="#" class="footer__privacy">Политика конфиденциальности</a>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- GSAP -->
+  <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+
+  <!-- App Scripts -->
+  <script defer src="js/main.js?v=8"></script>
+  <script defer src="js/particles.js?v=8"></script>
+  <script defer src="js/animations.js?v=8"></script>
+  <script defer src="js/counter.js?v=8"></script>
+  <script defer src="js/accordion.js?v=8"></script>
+  <script defer src="js/form.js?v=8"></script>
+  <script defer src="js/carousel.js?v=8"></script>
+  <script defer src="js/cursor.js?v=8"></script>
+  <script defer src="js/section-effects.js?v=8"></script>
+
+</body>
+</html>

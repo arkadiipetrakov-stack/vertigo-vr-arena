@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" fill="none" stroke="#00f0ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Head -->
+  <circle cx="32" cy="18" r="9"/>
+  <!-- Body -->
+  <path d="M16 56 Q16 40 32 40 Q48 40 48 56"/>
+  <!-- Headset band -->
+  <path d="M23 16 Q23 10 32 10 Q41 10 41 16"/>
+  <!-- Left earpiece -->
+  <rect x="20" y="14" width="5" height="7" rx="2"/>
+  <!-- Right earpiece -->
+  <rect x="39" y="14" width="5" height="7" rx="2"/>
+  <!-- Microphone -->
+  <path d="M25 18 Q25 24 28 24"/>
+</svg>

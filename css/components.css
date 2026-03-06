@@ -1,0 +1,362 @@
+/* ============================================
+   VERTIGO VR Arena - Reusable Components
+   ============================================ */
+
+/* ===========================================
+   BUTTONS
+   =========================================== */
+
+.btn {
+  padding: 14px 32px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: none;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+/* Primary - Gradient CTA */
+.btn--primary {
+  background: var(--gradient-primary);
+  color: #0a0a1a;
+  box-shadow: var(--glow-cyan-md);
+}
+
+.btn--primary:hover {
+  transform: scale(1.03);
+  box-shadow: var(--glow-cyan-lg);
+  color: #0a0a1a;
+}
+
+.btn--primary:active {
+  transform: scale(0.98);
+}
+
+/* Scan line effect on primary button hover */
+.btn--primary::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.15),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.btn--primary:hover::after {
+  left: 120%;
+}
+
+/* Secondary - Outlined */
+.btn--secondary {
+  background: transparent;
+  border: 2px solid var(--neon-cyan);
+  color: var(--neon-cyan);
+}
+
+.btn--secondary:hover {
+  background: rgba(var(--neon-cyan-rgb), 0.1);
+  box-shadow: var(--glow-cyan-sm);
+  color: var(--neon-cyan);
+}
+
+.btn--secondary:active {
+  background: rgba(var(--neon-cyan-rgb), 0.15);
+}
+
+/* Tertiary - Subtle */
+.btn--tertiary {
+  background: transparent;
+  border: 1px solid var(--glass-border);
+  color: var(--text-secondary);
+}
+
+.btn--tertiary:hover {
+  border-color: var(--neon-cyan);
+  color: var(--neon-cyan);
+}
+
+/* Full width */
+.btn--full {
+  width: 100%;
+}
+
+/* WhatsApp */
+.btn--whatsapp {
+  background: #25D366;
+  color: #fff;
+}
+
+.btn--whatsapp:hover {
+  filter: brightness(1.1);
+  color: #fff;
+  transform: scale(1.02);
+}
+
+.btn--whatsapp:active {
+  filter: brightness(0.95);
+}
+
+/* Telegram */
+.btn--telegram {
+  background: #0088cc;
+  color: #fff;
+}
+
+.btn--telegram:hover {
+  filter: brightness(1.1);
+  color: #fff;
+  transform: scale(1.02);
+}
+
+.btn--telegram:active {
+  filter: brightness(0.95);
+}
+
+/* Button icon */
+.btn__icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+/* ===========================================
+   CARDS
+   =========================================== */
+
+.card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  padding: 32px;
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  transition: all var(--transition-base);
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(var(--neon-cyan-rgb), 0.3);
+  box-shadow: var(--glow-cyan-sm);
+}
+
+/* ===========================================
+   FORM INPUTS
+   =========================================== */
+
+.form__group {
+  margin-bottom: 20px;
+}
+
+.form__label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--text-secondary);
+  font-size: var(--fs-small);
+  font-weight: 500;
+}
+
+.form__input,
+.form__select,
+.form__textarea {
+  width: 100%;
+  padding: 14px 18px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  transition: all var(--transition-base);
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.form__input::placeholder,
+.form__textarea::placeholder {
+  color: var(--text-muted);
+}
+
+.form__input:focus,
+.form__select:focus,
+.form__textarea:focus {
+  border-color: var(--neon-cyan);
+  box-shadow: 0 0 15px rgba(var(--neon-cyan-rgb), 0.2);
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.form__input:hover,
+.form__select:hover,
+.form__textarea:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Select arrow */
+.form__select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23a0a0b8' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 18px center;
+  padding-right: 44px;
+  cursor: pointer;
+}
+
+/* Textarea */
+.form__textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+/* Error state */
+.form__input--error,
+.form__select--error {
+  border-color: var(--error);
+}
+
+.form__input--error:focus,
+.form__select--error:focus {
+  box-shadow: 0 0 15px rgba(239, 68, 68, 0.2);
+}
+
+.form__error {
+  color: var(--error);
+  font-size: 0.75rem;
+  margin-top: 4px;
+  display: block;
+}
+
+/* Success state */
+.form__input--success {
+  border-color: var(--success);
+}
+
+/* ===========================================
+   BADGE
+   =========================================== */
+
+.badge {
+  display: inline-block;
+  padding: 4px 12px;
+  background: var(--gradient-primary);
+  color: #0a0a1a;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  border-radius: var(--radius-full);
+  letter-spacing: 0.1em;
+  line-height: 1.4;
+}
+
+.badge--outline {
+  background: transparent;
+  border: 1px solid var(--neon-cyan);
+  color: var(--neon-cyan);
+}
+
+.badge--violet {
+  background: linear-gradient(135deg, var(--neon-violet), var(--neon-pink));
+}
+
+/* ===========================================
+   SECTION TITLE ACCENT BADGE
+   =========================================== */
+
+.section__title-accent {
+  background: var(--gradient-primary);
+  background-size: 200% 200%;
+  color: var(--bg-primary);
+  padding: 0.05em 0.35em;
+  border-radius: 8px;
+  box-shadow: var(--glow-cyan-md);
+  animation: gradient-shift 4s ease infinite;
+  display: inline;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  position: relative;
+  overflow: hidden;
+}
+
+.section__title-accent::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  animation: accent-shimmer 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* ===========================================
+   TOOLTIP
+   =========================================== */
+
+.tooltip {
+  position: relative;
+  cursor: help;
+}
+
+.tooltip::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 8px 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-size: 0.75rem;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: all var(--transition-fast);
+  z-index: 100;
+  pointer-events: none;
+}
+
+.tooltip:hover::after {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ===========================================
+   DIVIDER
+   =========================================== */
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background: var(--glass-border);
+  margin: 24px 0;
+}
+
+.divider--glow {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(var(--neon-cyan-rgb), 0.3),
+    transparent
+  );
+}
