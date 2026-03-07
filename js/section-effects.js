@@ -24,9 +24,9 @@ document.addEventListener('DOMContentLoaded', function() {
   const isMobile = window.innerWidth < 768;
 
   // ─── Brand colors ───
-  const CYAN   = { r: 0, g: 240, b: 255 };
-  const VIOLET = { r: 139, g: 92, b: 246 };
-  const PINK   = { r: 244, g: 114, b: 182 };
+  const CYAN   = { r: 232, g: 93, b: 21 };    // brand orange
+  const VIOLET = { r: 107, g: 92, b: 231 };   // brand purple
+  const PINK   = { r: 255, g: 122, b: 51 };   // orange-light
   const GREEN  = { r: 74, g: 222, b: 128 };
 
   function rgba(c, a) { return `rgba(${c.r},${c.g},${c.b},${a})`; }
@@ -239,7 +239,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     _drawDigit(ctx, p) {
-      ctx.font = `bold ${p.size * 4}px Manrope, sans-serif`;
+      ctx.font = `bold ${p.size * 4}px Inter, sans-serif`;
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       ctx.fillText(p.text || '5+', 0, 0);
@@ -294,7 +294,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     _drawQuestion(ctx, p) {
-      ctx.font = `bold ${p.size * 5}px Manrope, sans-serif`;
+      ctx.font = `bold ${p.size * 5}px Inter, sans-serif`;
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       ctx.fillText('?', 0, 0);

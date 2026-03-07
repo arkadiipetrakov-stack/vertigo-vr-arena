@@ -25,9 +25,9 @@ class CursorEffect {
 
     // Brand colors as RGB arrays for fast access
     this.colorsRGB = [
-      [0, 240, 255],
-      [139, 92, 246],
-      [244, 114, 182]
+      [232, 93, 21],
+      [107, 92, 231],
+      [255, 122, 51]
     ];
 
     this.createElements();
@@ -43,13 +43,13 @@ class CursorEffect {
     this.ring.style.cssText = `
       position:fixed;top:0;left:0;
       width:30px;height:30px;
-      border:2px solid rgba(0,240,255,0.6);
+      border:2px solid rgba(232,93,21,0.6);
       border-radius:50%;
       pointer-events:none;z-index:9999;
       transition:width 0.25s ease,height 0.25s ease,
                  border-color 0.25s ease,background 0.25s ease;
       transform:translate(-50%,-50%);
-      box-shadow:0 0 10px rgba(0,240,255,0.3),inset 0 0 10px rgba(0,240,255,0.1);
+      box-shadow:0 0 10px rgba(232,93,21,0.3),inset 0 0 10px rgba(232,93,21,0.1);
       mix-blend-mode:screen;
       will-change:transform;
     `;
@@ -60,11 +60,11 @@ class CursorEffect {
     this.dot.style.cssText = `
       position:fixed;top:0;left:0;
       width:4px;height:4px;
-      background:#00f0ff;
+      background:#E85D15;
       border-radius:50%;
       pointer-events:none;z-index:9999;
       transform:translate(-50%,-50%);
-      box-shadow:0 0 6px rgba(0,240,255,0.8);
+      box-shadow:0 0 6px rgba(232,93,21,0.8);
       will-change:transform;
     `;
     document.body.appendChild(this.dot);
@@ -74,7 +74,7 @@ class CursorEffect {
     this.glowEl.style.cssText = `
       position:fixed;top:0;left:0;
       width:400px;height:400px;
-      background:radial-gradient(circle,rgba(0,240,255,0.08) 0%,transparent 70%);
+      background:radial-gradient(circle,rgba(232,93,21,0.08) 0%,transparent 70%);
       border-radius:50%;
       pointer-events:none;z-index:0;
       transform:translate(-50%,-50%);
@@ -115,8 +115,8 @@ class CursorEffect {
         this.isHovering = true;
         this.ring.style.width = '50px';
         this.ring.style.height = '50px';
-        this.ring.style.borderColor = 'rgba(0,240,255,0.9)';
-        this.ring.style.background = 'rgba(0,240,255,0.05)';
+        this.ring.style.borderColor = 'rgba(232,93,21,0.9)';
+        this.ring.style.background = 'rgba(232,93,21,0.05)';
       }
     }, { passive: true });
 
@@ -125,7 +125,7 @@ class CursorEffect {
         this.isHovering = false;
         this.ring.style.width = '30px';
         this.ring.style.height = '30px';
-        this.ring.style.borderColor = 'rgba(0,240,255,0.6)';
+        this.ring.style.borderColor = 'rgba(232,93,21,0.6)';
         this.ring.style.background = 'transparent';
       }
     }, { passive: true });

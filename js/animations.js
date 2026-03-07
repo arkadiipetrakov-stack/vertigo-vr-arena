@@ -18,18 +18,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
   gsap.registerPlugin(ScrollTrigger);
 
+  // Global defaults for smoother animations
+  gsap.defaults({
+    ease: 'power3.out',
+    duration: 1,
+    force3D: true
+  });
+
   // ------------------------------------------------
   // 1. Hero headline - split text animation
   // ------------------------------------------------
   const heroTitle = document.querySelector('.hero__title');
   if (heroTitle) {
-    // Find accent word before splitting
     const accentEl = heroTitle.querySelector('.hero__title-accent');
     const accentWord = accentEl ? accentEl.textContent.trim() : '';
 
     const text = heroTitle.textContent;
     heroTitle.innerHTML = '';
-    // Split on any whitespace (including nbsp)
     const words = text.split(/\s+/).filter(Boolean);
 
     words.forEach((word, wordIndex) => {
@@ -52,12 +57,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const chars = heroTitle.querySelectorAll('span > span');
     gsap.fromTo(chars,
-      { opacity: 0, y: 80 },
+      { opacity: 0, y: 40 },
       {
         y: 0,
         opacity: 1,
-        stagger: 0.03,
-        duration: 0.8,
+        stagger: 0.025,
+        duration: 0.9,
         ease: 'power3.out',
         delay: 0.3
       }
@@ -70,16 +75,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const heroSubtitle = document.querySelector('.hero__subtitle');
   if (heroSubtitle) {
     gsap.fromTo(heroSubtitle,
-      { opacity: 0, y: 30 },
-      { opacity: 1, y: 0, duration: 0.7, delay: 1.2 }
+      { opacity: 0, y: 20 },
+      { opacity: 1, y: 0, duration: 1, delay: 1.2, ease: 'power3.out' }
     );
   }
 
   const heroCTAs = document.querySelectorAll('.hero__ctas .btn');
   if (heroCTAs.length) {
     gsap.fromTo(heroCTAs,
-      { opacity: 0, y: 20 },
-      { opacity: 1, y: 0, stagger: 0.15, duration: 0.5, delay: 1.5 }
+      { opacity: 0, y: 15 },
+      { opacity: 1, y: 0, stagger: 0.12, duration: 0.8, delay: 1.5, ease: 'power3.out' }
     );
   }
 
@@ -87,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (heroTrust) {
     gsap.fromTo(heroTrust,
       { opacity: 0 },
-      { opacity: 1, duration: 0.5, delay: 2 }
+      { opacity: 1, duration: 0.8, delay: 2, ease: 'power2.out' }
     );
   }
 
@@ -101,23 +106,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const fromProps = { opacity: 0 };
     const toProps = {
       opacity: 1,
-      duration: 0.7,
+      duration: 1,
       delay: delayAttr,
-      ease: 'power2.out',
+      ease: 'power3.out',
       scrollTrigger: {
         trigger: el,
-        start: 'top 85%',
+        start: 'top 88%',
         toggleActions: 'play none none none'
       }
     };
 
-    if (direction === 'up') { fromProps.y = 50; toProps.y = 0; }
-    if (direction === 'down') { fromProps.y = -50; toProps.y = 0; }
-    if (direction === 'left') { fromProps.x = -50; toProps.x = 0; }
-    if (direction === 'right') { fromProps.x = 50; toProps.x = 0; }
+    if (direction === 'up') { fromProps.y = 30; toProps.y = 0; }
+    if (direction === 'down') { fromProps.y = -30; toProps.y = 0; }
+    if (direction === 'left') { fromProps.x = -30; toProps.x = 0; }
+    if (direction === 'right') { fromProps.x = 30; toProps.x = 0; }
     if (direction === 'scale') {
-      fromProps.scale = 0.85;
-      fromProps.y = 30;
+      fromProps.scale = 0.95;
+      fromProps.y = 20;
       toProps.scale = 1;
       toProps.y = 0;
     }
@@ -133,16 +138,16 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!children.length) return;
 
     gsap.fromTo(children,
-      { opacity: 0, y: 40 },
+      { opacity: 0, y: 25 },
       {
         opacity: 1,
         y: 0,
-        stagger: 0.15,
-        duration: 0.6,
-        ease: 'power2.out',
+        stagger: 0.12,
+        duration: 0.9,
+        ease: 'power3.out',
         scrollTrigger: {
           trigger: group,
-          start: 'top 80%'
+          start: 'top 85%'
         }
       }
     );
@@ -166,27 +171,27 @@ document.addEventListener('DOMContentLoaded', () => {
         trigger: '.timeline',
         start: 'top 70%',
         end: 'bottom 30%',
-        scrub: 1
+        scrub: 1.5
       }
     });
   }
 
-  // Timeline nodes - activate as user scrolls past them
+  // Timeline nodes
   const timelineNodes = document.querySelectorAll('.timeline__node');
   if (timelineNodes.length) {
     timelineNodes.forEach((node, i) => {
       const nodeContent = node.querySelector('.timeline__content') || node;
 
       gsap.fromTo(nodeContent,
-        { opacity: 0, x: i % 2 === 0 ? -40 : 40 },
+        { opacity: 0, x: i % 2 === 0 ? -25 : 25 },
         {
           opacity: 1,
           x: 0,
-          duration: 0.7,
-          ease: 'power2.out',
+          duration: 1,
+          ease: 'power3.out',
           scrollTrigger: {
             trigger: node,
-            start: 'top 75%',
+            start: 'top 80%',
             toggleActions: 'play none none none',
             onEnter: () => {
               node.classList.add('timeline__node--active');
@@ -198,7 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ------------------------------------------------
-  // 6. Tariff cards entrance - MAX first, then OPTIMAL, then MIN
+  // 6. Tariff cards entrance
   // ------------------------------------------------
   const tariffSection = document.querySelector('.tariffs');
   const tariffCards = document.querySelectorAll('.tariff-card');
@@ -213,7 +218,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const tariffTl = gsap.timeline({
       scrollTrigger: {
         trigger: tariffSection,
-        start: 'top 70%',
+        start: 'top 75%',
         toggleActions: 'play none none none'
       },
       onComplete() {
@@ -223,20 +228,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (featuredIndex !== -1) {
       tariffTl.fromTo(sortedCards[featuredIndex],
-        { opacity: 0, y: 60, scale: 0.9 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.7, ease: 'back.out(1.4)' }
+        { opacity: 0, y: 40, scale: 0.95 },
+        { opacity: 1, y: 0, scale: 1, duration: 1, ease: 'power3.out' }
       );
 
       const otherCards = sortedCards.filter((_, idx) => idx !== featuredIndex);
       tariffTl.fromTo(otherCards,
-        { opacity: 0, y: 50 },
-        { opacity: 1, y: 0, stagger: 0.15, duration: 0.6, ease: 'power2.out' },
-        '-=0.3'
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, stagger: 0.12, duration: 0.9, ease: 'power3.out' },
+        '-=0.5'
       );
     } else {
       tariffTl.fromTo(sortedCards,
-        { opacity: 0, y: 50 },
-        { opacity: 1, y: 0, stagger: 0.2, duration: 0.6, ease: 'power2.out' }
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, stagger: 0.15, duration: 0.9, ease: 'power3.out' }
       );
     }
   }
@@ -257,7 +262,7 @@ document.addEventListener('DOMContentLoaded', () => {
           left: 0;
           width: 100%;
           height: 3px;
-          background: linear-gradient(90deg, transparent, #00f0ff, transparent);
+          background: linear-gradient(90deg, transparent, #E85D15, transparent);
           opacity: 0;
           pointer-events: none;
           z-index: 2;
@@ -270,27 +275,27 @@ document.addEventListener('DOMContentLoaded', () => {
       const cardTl = gsap.timeline({
         scrollTrigger: {
           trigger: card,
-          start: 'top 80%',
+          start: 'top 85%',
           toggleActions: 'play none none none'
         }
       });
 
       cardTl.fromTo(card,
-        { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 0.5, delay: i * 0.1 }
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.8, delay: i * 0.08, ease: 'power3.out' }
       );
 
       cardTl.fromTo(scanLine,
         { opacity: 1, top: '0%' },
         {
           top: '100%',
-          duration: 0.6,
-          ease: 'power1.inOut',
+          duration: 0.8,
+          ease: 'power2.inOut',
           onComplete: () => {
-            gsap.to(scanLine, { opacity: 0, duration: 0.3 });
+            gsap.to(scanLine, { opacity: 0, duration: 0.4 });
           }
         },
-        '-=0.2'
+        '-=0.3'
       );
     });
   }
@@ -300,15 +305,15 @@ document.addEventListener('DOMContentLoaded', () => {
   // ------------------------------------------------
   document.querySelectorAll('.section__title').forEach(title => {
     gsap.fromTo(title,
-      { opacity: 0, y: 40 },
+      { opacity: 0, y: 25 },
       {
         opacity: 1,
         y: 0,
-        duration: 0.8,
-        ease: 'power2.out',
+        duration: 1,
+        ease: 'power3.out',
         scrollTrigger: {
           trigger: title,
-          start: 'top 85%'
+          start: 'top 88%'
         }
       }
     );
@@ -316,16 +321,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.querySelectorAll('.section__subtitle').forEach(subtitle => {
     gsap.fromTo(subtitle,
-      { opacity: 0, y: 25 },
+      { opacity: 0, y: 15 },
       {
         opacity: 1,
         y: 0,
-        duration: 0.6,
-        delay: 0.15,
-        ease: 'power2.out',
+        duration: 0.9,
+        delay: 0.1,
+        ease: 'power3.out',
         scrollTrigger: {
           trigger: subtitle,
-          start: 'top 85%'
+          start: 'top 88%'
         }
       }
     );
@@ -337,16 +342,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const galleryItems = document.querySelectorAll('.gallery__item');
   if (galleryItems.length) {
     gsap.fromTo(galleryItems,
-      { opacity: 0, scale: 0.9 },
+      { opacity: 0, scale: 0.95, y: 20 },
       {
         opacity: 1,
         scale: 1,
+        y: 0,
         stagger: 0.1,
-        duration: 0.6,
-        ease: 'power2.out',
+        duration: 0.9,
+        ease: 'power3.out',
         scrollTrigger: {
           trigger: galleryItems[0].parentElement,
-          start: 'top 75%'
+          start: 'top 80%'
         }
       }
     );
@@ -358,28 +364,30 @@ document.addEventListener('DOMContentLoaded', () => {
   const bookingSection = document.querySelector('.booking');
   if (bookingSection) {
     gsap.fromTo('.booking__info',
-      { opacity: 0, x: -40 },
+      { opacity: 0, x: -25 },
       {
         opacity: 1,
         x: 0,
-        duration: 0.7,
+        duration: 1,
+        ease: 'power3.out',
         scrollTrigger: {
           trigger: bookingSection,
-          start: 'top 70%'
+          start: 'top 75%'
         }
       }
     );
 
     gsap.fromTo('.booking__form-wrapper',
-      { opacity: 0, x: 40 },
+      { opacity: 0, x: 25 },
       {
         opacity: 1,
         x: 0,
-        duration: 0.7,
-        delay: 0.2,
+        duration: 1,
+        delay: 0.15,
+        ease: 'power3.out',
         scrollTrigger: {
           trigger: bookingSection,
-          start: 'top 70%'
+          start: 'top 75%'
         }
       }
     );
@@ -391,16 +399,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const statsItems = document.querySelectorAll('.stats__item, .trust__stat, .stat-card');
   if (statsItems.length) {
     gsap.fromTo(statsItems,
-      { opacity: 0, y: 30 },
+      { opacity: 0, y: 20 },
       {
         opacity: 1,
         y: 0,
-        stagger: 0.12,
-        duration: 0.5,
-        ease: 'power2.out',
+        stagger: 0.1,
+        duration: 0.8,
+        ease: 'power3.out',
         scrollTrigger: {
           trigger: statsItems[0].parentElement,
-          start: 'top 80%'
+          start: 'top 85%'
         }
       }
     );
@@ -414,15 +422,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const footerItems = footer.querySelectorAll('.footer__brand, .footer__nav, .footer__social');
     if (footerItems.length) {
       gsap.fromTo(footerItems,
-        { opacity: 0, y: 30 },
+        { opacity: 0, y: 20 },
         {
           opacity: 1,
           y: 0,
-          stagger: 0.1,
-          duration: 0.6,
+          stagger: 0.08,
+          duration: 0.8,
+          ease: 'power3.out',
           scrollTrigger: {
             trigger: footer,
-            start: 'top 90%'
+            start: 'top 92%'
           }
         }
       );
@@ -443,7 +452,7 @@ document.addEventListener('DOMContentLoaded', () => {
             trigger: '.hero',
             start: 'top top',
             end: 'bottom top',
-            scrub: 1
+            scrub: 1.5
           }
         });
       }
@@ -456,21 +465,22 @@ document.addEventListener('DOMContentLoaded', () => {
             trigger: decor.parentElement,
             start: 'top bottom',
             end: 'bottom top',
-            scrub: 1
+            scrub: 1.5
           }
         });
       });
 
       document.querySelectorAll('.section__badge').forEach(badge => {
         gsap.fromTo(badge,
-          { opacity: 0, x: -30 },
+          { opacity: 0, x: -20 },
           {
             opacity: 1,
             x: 0,
-            duration: 0.5,
+            duration: 0.8,
+            ease: 'power3.out',
             scrollTrigger: {
               trigger: badge,
-              start: 'top 85%'
+              start: 'top 88%'
             }
           }
         );
@@ -481,14 +491,15 @@ document.addEventListener('DOMContentLoaded', () => {
       document.querySelectorAll('.timeline__node').forEach(node => {
         const nodeContent = node.querySelector('.timeline__content') || node;
         gsap.fromTo(nodeContent,
-          { opacity: 0, y: 30 },
+          { opacity: 0, y: 20 },
           {
             opacity: 1,
             y: 0,
-            duration: 0.6,
+            duration: 0.9,
+            ease: 'power3.out',
             scrollTrigger: {
               trigger: node,
-              start: 'top 85%',
+              start: 'top 88%',
               toggleActions: 'play none none none'
             }
           }

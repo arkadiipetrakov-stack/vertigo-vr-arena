@@ -31,14 +31,14 @@
 /* Primary - Gradient CTA */
 .btn--primary {
   background: var(--gradient-primary);
-  color: #0a0a1a;
+  color: #ffffff;
   box-shadow: var(--glow-cyan-md);
 }
 
 .btn--primary:hover {
   transform: scale(1.03);
   box-shadow: var(--glow-cyan-lg);
-  color: #0a0a1a;
+  color: #ffffff;
 }
 
 .btn--primary:active {
@@ -257,7 +257,7 @@
   display: inline-block;
   padding: 4px 12px;
   background: var(--gradient-primary);
-  color: #0a0a1a;
+  color: #ffffff;
   font-size: 0.75rem;
   font-weight: 700;
   text-transform: uppercase;
@@ -283,9 +283,9 @@
 .section__title-accent {
   background: var(--gradient-primary);
   background-size: 200% 200%;
-  color: var(--bg-primary);
-  padding: 0.05em 0.35em;
-  border-radius: 8px;
+  color: #ffffff;
+  padding: 0.1em 0.5em;
+  border-radius: var(--radius-full);
   box-shadow: var(--glow-cyan-md);
   animation: gradient-shift 4s ease infinite;
   display: inline;

@@ -40,7 +40,7 @@
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(10, 10, 26, 0.97);
+  background: rgba(26, 26, 46, 0.97);
   backdrop-filter: blur(20px);
   z-index: 999;
   flex-direction: column;
@@ -130,6 +130,16 @@
 
   .hero__scroll-indicator {
     display: none;
+  }
+
+  /* Hide geometric decorations on mobile */
+  .section__geo-circles,
+  .hero__geo-pattern {
+    display: none;
+  }
+
+  .hero__glow-orbs {
+    animation: none;
   }
 
   /* Section spacing */
@@ -245,6 +255,34 @@
     display: none;
   }
 
+  /* Gallery */
+  .gallery__grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .gallery__item,
+  .gallery__item:nth-child(4),
+  .gallery__item:nth-child(5) {
+    grid-column: span 1;
+  }
+
+  /* Location */
+  .location__map {
+    height: 300px;
+  }
+
+  /* Reviews Yandex */
+  .reviews__yandex {
+    margin-top: 32px;
+  }
+
+  .reviews__yandex-link {
+    padding: 12px 20px;
+    font-size: 0.875rem;
+    gap: 8px;
+  }
+
   /* FAQ */
   .faq__list {
     max-width: 100%;
@@ -310,6 +348,23 @@
     grid-template-columns: 1fr 1fr;
     text-align: left;
   }
+
+  .gallery__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .gallery__item,
+  .gallery__item:nth-child(4),
+  .gallery__item:nth-child(5) {
+    grid-column: span 1;
+  }
+
+  /* Center last item when odd count */
+  .gallery__item:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    max-width: 50%;
+    justify-self: center;
+  }
 }
 
 /* ========= Min 768px — Tablets landscape ========= */
@@ -333,6 +388,27 @@
 
   .safety__grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .gallery__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .gallery__item,
+  .gallery__item:nth-child(4),
+  .gallery__item:nth-child(5) {
+    grid-column: span 1;
+  }
+
+  .gallery__item:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    max-width: 50%;
+    justify-self: center;
+  }
+
+  /* Location */
+  .location__map {
+    height: 380px;
   }
 
   .footer__grid {

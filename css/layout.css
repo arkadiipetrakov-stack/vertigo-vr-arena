@@ -80,6 +80,10 @@
   background: var(--bg-primary);
 }
 
+#gallery {
+  background: var(--bg-tertiary);
+}
+
 #faq {
   background: var(--bg-secondary);
 }
@@ -88,8 +92,57 @@
   background: var(--bg-primary);
 }
 
+#location {
+  background: var(--bg-secondary);
+}
+
 .footer {
-  background: #050510;
+  background: #0F0F1A;
+}
+
+/* --- Geometric Decorations --- */
+.section__geo-circles {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.1;
+}
+
+.section__geo-circles--right {
+  right: -80px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.section__geo-circles--left {
+  left: -80px;
+  top: 30%;
+}
+
+.section__geo-circles::before,
+.section__geo-circles::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  border: 3px solid;
+}
+
+.section__geo-circles::before {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  border-color: var(--accent-orange);
+}
+
+.section__geo-circles::after {
+  width: 65%;
+  height: 65%;
+  top: 17.5%;
+  left: 17.5%;
+  border-color: var(--accent-purple);
 }
 
 /* --- Section Gradient Transitions --- */
@@ -173,7 +226,19 @@
   left: 0;
   right: 0;
   height: 120px;
-  background: linear-gradient(to bottom, var(--bg-primary), var(--bg-secondary));
+  background: linear-gradient(to bottom, var(--bg-primary), var(--bg-tertiary));
+  z-index: 1;
+  pointer-events: none;
+}
+
+#gallery::after {
+  content: '';
+  position: absolute;
+  bottom: -60px;
+  left: 0;
+  right: 0;
+  height: 120px;
+  background: linear-gradient(to bottom, var(--bg-tertiary), var(--bg-secondary));
   z-index: 1;
   pointer-events: none;
 }
@@ -186,6 +251,30 @@
   right: 0;
   height: 120px;
   background: linear-gradient(to bottom, var(--bg-secondary), var(--bg-primary));
+  z-index: 1;
+  pointer-events: none;
+}
+
+#booking::after {
+  content: '';
+  position: absolute;
+  bottom: -60px;
+  left: 0;
+  right: 0;
+  height: 120px;
+  background: linear-gradient(to bottom, var(--bg-primary), var(--bg-secondary));
+  z-index: 1;
+  pointer-events: none;
+}
+
+#location::after {
+  content: '';
+  position: absolute;
+  bottom: -60px;
+  left: 0;
+  right: 0;
+  height: 120px;
+  background: linear-gradient(to bottom, var(--bg-secondary), #0F0F1A);
   z-index: 1;
   pointer-events: none;
 }

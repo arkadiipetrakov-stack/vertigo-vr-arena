@@ -16,16 +16,16 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- Stylesheets -->
-  <link rel="stylesheet" href="css/variables.css?v=9">
-  <link rel="stylesheet" href="css/base.css?v=9">
-  <link rel="stylesheet" href="css/layout.css?v=9">
-  <link rel="stylesheet" href="css/components.css?v=9">
-  <link rel="stylesheet" href="css/sections.css?v=9">
-  <link rel="stylesheet" href="css/animations.css?v=9">
-  <link rel="stylesheet" href="css/responsive.css?v=9">
+  <link rel="stylesheet" href="css/variables.css?v=10">
+  <link rel="stylesheet" href="css/base.css?v=10">
+  <link rel="stylesheet" href="css/layout.css?v=10">
+  <link rel="stylesheet" href="css/components.css?v=10">
+  <link rel="stylesheet" href="css/sections.css?v=10">
+  <link rel="stylesheet" href="css/animations.css?v=10">
+  <link rel="stylesheet" href="css/responsive.css?v=10">
 
   <style>html{scroll-behavior:smooth}</style>
 </head>
@@ -35,7 +35,7 @@
   <nav class="nav" id="header">
     <div class="container nav__container">
       <a href="#hero" class="nav__logo" aria-label="VERTIGO — на главную">
-        <span class="nav__logo-text">VERTIGO</span>
+        <img src="assets/logo-light.svg" alt="VERTIGO" class="nav__logo-img" width="140" height="28">
       </a>
 
       <ul class="nav__links" id="nav-list">
@@ -77,6 +77,8 @@
     <!-- ===== HERO ===== -->
     <section class="hero" id="hero">
       <canvas id="particles-canvas" class="hero__canvas" aria-hidden="true"></canvas>
+      <div class="hero__geo-pattern" aria-hidden="true"></div>
+      <div class="hero__glow-orbs" aria-hidden="true"></div>
 
       <div class="hero__content container">
         <h1 class="hero__title">День&nbsp;рождения который ваш ребёнок будет вспоминать <span class="hero__title-accent">годами</span></h1>
@@ -239,6 +241,7 @@
 
     <!-- ===== TARIFFS ===== -->
     <section class="tariffs section" id="tariffs">
+      <div class="section__geo-circles section__geo-circles--right" aria-hidden="true"></div>
       <div class="container">
         <h2 class="section__title" data-animate="up">Выберите формат <span class="section__title-accent">праздника</span></h2>
         <p class="section__subtitle" data-animate="up">От камерного до грандиозного</p>
@@ -467,6 +470,45 @@
           <button class="reviews__dot" aria-label="Отзыв 5"></button>
           <button class="reviews__dot" aria-label="Отзыв 6"></button>
         </div>
+
+        <!-- Yandex Maps Reviews Link -->
+        <div class="reviews__yandex" data-animate="up">
+          <a href="https://yandex.com/maps/org/vertigo/103489904717/" class="reviews__yandex-link" target="_blank" rel="noopener noreferrer">
+            <span class="reviews__yandex-badge">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              5.0
+            </span>
+            <span class="reviews__yandex-text">Все отзывы на Яндекс Картах</span>
+            <svg class="reviews__yandex-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ===== GALLERY ===== -->
+    <section class="gallery section" id="gallery">
+      <div class="container">
+        <h2 class="section__title" data-animate="up">Как проходят наши <span class="section__title-accent">праздники</span></h2>
+        <p class="section__subtitle" data-animate="up">Фотографии с настоящих VR-праздников в VERTIGO</p>
+
+        <div class="gallery__grid">
+          <div class="gallery__item" data-animate="up">
+            <img src="assets/photos/vr-party-kids.webp" alt="Дети и взрослые играют в VR на дне рождения" loading="lazy" width="800" height="600">
+          </div>
+          <div class="gallery__item" data-animate="up">
+            <img src="assets/photos/party-room-neon.webp" alt="Зал для VR-праздника с неоновой подсветкой" loading="lazy" width="800" height="600">
+          </div>
+          <div class="gallery__item" data-animate="up">
+            <img src="assets/photos/headset-cleaning.webp" alt="Дезинфекция VR-шлемов между сеансами" loading="lazy" width="800" height="600">
+          </div>
+          <div class="gallery__item" data-animate="up">
+            <img src="assets/photos/kids-preparing-vr.webp" alt="Дети готовятся к VR-приключению" loading="lazy" width="800" height="600">
+          </div>
+          <div class="gallery__item" data-animate="up">
+            <img src="assets/photos/group-photo-vr.webp" alt="Групповое фото с VR-шлемами" loading="lazy" width="800" height="600">
+          </div>
+        </div>
       </div>
     </section>
 
@@ -557,6 +599,7 @@
 
     <!-- ===== FINAL CTA / BOOKING ===== -->
     <section class="booking section" id="booking">
+      <div class="section__geo-circles section__geo-circles--left" aria-hidden="true"></div>
       <div class="container">
         <h2 class="section__title" data-animate="up">Забронируйте <span class="section__title-accent">дату</span></h2>
         <p class="section__subtitle" data-animate="up">Свободных слотов на&nbsp;выходные всё меньше</p>
@@ -611,6 +654,28 @@
         </div>
       </div>
     </section>
+
+
+    <!-- ===== LOCATION / MAP ===== -->
+    <section class="location section" id="location">
+      <div class="container">
+        <h2 class="section__title" data-animate="up">Как нас <span class="section__title-accent">найти</span></h2>
+        <p class="section__subtitle" data-animate="up">Саратов, пр-т Петра Столыпина 27, ТЦ&nbsp;«Манеж», 3&nbsp;этаж</p>
+
+        <div class="location__map-wrapper" data-animate="up">
+          <iframe
+            class="location__map"
+            src="https://yandex.ru/map-widget/v1/?ll=46.026965%2C51.531407&z=16&l=map&pt=46.026965%2C51.531407%2Cpm2rdm"
+            width="100%"
+            height="450"
+            frameborder="0"
+            allowfullscreen
+            loading="lazy"
+            title="VERTIGO VR Arena на карте">
+          </iframe>
+        </div>
+      </div>
+    </section>
   </main>
 
 
@@ -621,7 +686,7 @@
 
         <div class="footer__brand">
           <a href="#hero" class="footer__logo" aria-label="VERTIGO VR — на главную">
-            <span class="footer__logo-text">VERTIGO VR</span>
+            <img src="assets/logo-light.svg" alt="VERTIGO" class="footer__logo-img" width="140" height="28">
           </a>
           <address class="footer__address">
             Саратов, пр-т Петра Столыпина 27,<br>ТЦ &laquo;Манеж&raquo;, 3&nbsp;этаж
@@ -669,15 +734,15 @@
   <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 
   <!-- App Scripts -->
-  <script defer src="js/main.js?v=9"></script>
-  <script defer src="js/particles.js?v=9"></script>
-  <script defer src="js/animations.js?v=9"></script>
-  <script defer src="js/counter.js?v=9"></script>
-  <script defer src="js/accordion.js?v=9"></script>
-  <script defer src="js/form.js?v=9"></script>
-  <script defer src="js/carousel.js?v=9"></script>
-  <script defer src="js/cursor.js?v=9"></script>
-  <script defer src="js/section-effects.js?v=9"></script>
+  <script defer src="js/main.js?v=10"></script>
+  <script defer src="js/particles.js?v=10"></script>
+  <script defer src="js/animations.js?v=10"></script>
+  <script defer src="js/counter.js?v=10"></script>
+  <script defer src="js/accordion.js?v=10"></script>
+  <script defer src="js/form.js?v=10"></script>
+  <script defer src="js/carousel.js?v=10"></script>
+  <script defer src="js/cursor.js?v=10"></script>
+  <script defer src="js/section-effects.js?v=10"></script>
 
 </body>
 </html>

@@ -18,13 +18,13 @@ class ParticleSystem {
     this.frameInterval = 1000 / 30; // 30fps cap
 
     // Responsive particle count (reduced)
-    this.particleCount = window.innerWidth < 768 ? 18 : 35;
+    this.particleCount = window.innerWidth < 768 ? 25 : 50;
 
     // Colors
     this.colors = [
-      { r: 0, g: 240, b: 255 },   // cyan
-      { r: 139, g: 92, b: 246 },   // violet
-      { r: 244, g: 114, b: 182 }   // pink
+      { r: 232, g: 93, b: 21 },    // orange
+      { r: 107, g: 92, b: 231 },   // purple
+      { r: 255, g: 122, b: 51 }    // orange-light
     ];
 
     // Mouse repulsion radius
@@ -86,12 +86,12 @@ class ParticleSystem {
       this.particles.push({
         x: Math.random() * this.width,
         y: Math.random() * this.height,
-        size: Math.random() * 4 + 1,
-        speedX: (Math.random() - 0.5) * 0.3,
-        speedY: -(Math.random() * 0.5 + 0.1),
-        opacity: Math.random() * 0.3 + 0.05,
+        size: Math.random() * 5 + 1.5,
+        speedX: (Math.random() - 0.5) * 0.5,
+        speedY: -(Math.random() * 0.7 + 0.15),
+        opacity: Math.random() * 0.4 + 0.1,
         color: color,
-        shape: shapeRand < 0.6 ? 'circle' : shapeRand < 0.8 ? 'triangle' : 'hexagon',
+        shape: shapeRand < 0.6 ? 'circle' : shapeRand < 0.8 ? 'triangle' : 'diamond',
         rotation: Math.random() * Math.PI * 2,
         rotationSpeed: (Math.random() - 0.5) * 0.01
       });
@@ -134,7 +134,7 @@ class ParticleSystem {
       clearTimeout(this._resizeTimeout);
       this._resizeTimeout = setTimeout(() => {
         this.resize();
-        this.particleCount = window.innerWidth < 768 ? 18 : 35;
+        this.particleCount = window.innerWidth < 768 ? 25 : 50;
         this.createParticles();
       }, 250);
     };
@@ -191,33 +191,28 @@ class ParticleSystem {
     ctx.restore();
   }
 
-  drawHexagon(p) {
-    const ctx = this.ctx;
-    const size = p.size * 2;
-    ctx.save();
-    ctx.translate(p.x, p.y);
-    ctx.rotate(p.rotation);
-    ctx.globalAlpha = p.opacity;
-    ctx.beginPath();
-    for (let i = 0; i < 6; i++) {
-      const angle = (Math.PI / 3) * i - Math.PI / 6;
-      const x = size * Math.cos(angle);
-      const y = size * Math.sin(angle);
-      if (i === 0) ctx.moveTo(x, y);
-      else ctx.lineTo(x, y);
-    }
-    ctx.closePath();
-    ctx.strokeStyle = `rgba(${p.color.r},${p.color.g},${p.color.b},${p.opacity})`;
-    ctx.lineWidth = 1;
-    ctx.stroke();
-    ctx.restore();
+  drawDiamond(p) {
+    const s = p.size * 2;
+    this.ctx.save();
+    this.ctx.translate(p.x, p.y);
+    this.ctx.rotate(p.rotation);
+    this.ctx.globalAlpha = p.opacity;
+    this.ctx.beginPath();
+    this.ctx.moveTo(0, -s);
+    this.ctx.lineTo(s * 0.6, 0);
+    this.ctx.lineTo(0, s);
+    this.ctx.lineTo(-s * 0.6, 0);
+    this.ctx.closePath();
+    this.ctx.fillStyle = `rgba(${p.color.r},${p.color.g},${p.color.b},${p.opacity})`;
+    this.ctx.fill();
+    this.ctx.restore();
   }
 
   drawParticle(p) {
     switch (p.shape) {
       case 'circle':   this.drawCircle(p); break;
       case 'triangle': this.drawTriangle(p); break;
-      case 'hexagon':  this.drawHexagon(p); break;
+      case 'diamond':  this.drawDiamond(p); break;
     }
   }
 
@@ -280,7 +275,7 @@ class ParticleSystem {
 
   drawConnections() {
     // OPTIMIZED: squared distance comparison (no Math.sqrt)
-    const maxDistSq = 14400; // 120 * 120
+    const maxDistSq = 22500; // 150 * 150
     const ctx = this.ctx;
     const ps = this.particles;
     const len = ps.length;
@@ -291,17 +286,17 @@ class ParticleSystem {
       for (let j = i + 1; j < len; j++) {
         const dx = ps[i].x - ps[j].x;
         // Quick X-axis reject before full calculation
-        if (dx > 120 || dx < -120) continue;
+        if (dx > 150 || dx < -150) continue;
         const dy = ps[i].y - ps[j].y;
-        if (dy > 120 || dy < -120) continue;
+        if (dy > 150 || dy < -150) continue;
         const distSq = dx * dx + dy * dy;
 
         if (distSq < maxDistSq) {
-          const opacity = (1 - distSq / maxDistSq) * 0.08;
+          const opacity = (1 - distSq / maxDistSq) * 0.15;
           ctx.beginPath();
           ctx.moveTo(ps[i].x, ps[i].y);
           ctx.lineTo(ps[j].x, ps[j].y);
-          ctx.strokeStyle = `rgba(0, 240, 255, ${opacity})`;
+          ctx.strokeStyle = `rgba(232, 93, 21, ${opacity})`;
           ctx.stroke();
         }
       }
