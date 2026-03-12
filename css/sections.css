@@ -42,6 +42,24 @@
   width: auto;
 }
 
+.nav__logo-text,
+.footer__logo-text {
+  font-family: 'Space Ranger', var(--font-heading);
+  font-size: 1.75rem;
+  color: #fff;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.nav__logo-v,
+.footer__logo-v {
+  background: linear-gradient(135deg, #E85D15, #FF7A33);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
 .nav__links {
   display: flex;
   gap: 32px;
@@ -367,6 +385,7 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
+  align-items: stretch;
 }
 
 .stat-card {
@@ -762,9 +781,18 @@
 /* Tariff card internals */
 .tariff-card__badge {
   position: absolute;
-  top: -12px;
+  top: 16px;
   right: 24px;
   z-index: 3;
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 8px 24px;
+  background: linear-gradient(135deg, #E85D15, #FF7A33);
+  color: #fff;
+  border-radius: var(--radius-full);
+  letter-spacing: 0.04em;
+  box-shadow: 0 0 24px rgba(232, 93, 21, 0.5);
 }
 
 /* Animated badge with rotating gradient border */
@@ -812,6 +840,19 @@
   margin-bottom: 8px;
   color: var(--text-primary);
   line-height: 1.1;
+}
+
+.tariff-card__duration {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  font-weight: 600;
+  color: var(--neon-cyan);
+  background: rgba(var(--neon-cyan-rgb), 0.1);
+  border: 1px solid rgba(var(--neon-cyan-rgb), 0.2);
+  border-radius: var(--radius-full);
+  padding: 4px 16px;
+  margin-bottom: 20px;
 }
 
 .tariff-card__price-note {
@@ -1095,14 +1136,7 @@
   transition: transform var(--transition-base), box-shadow var(--transition-base);
 }
 
-/* Center bottom row (2 items) when 5 total */
-.gallery__item:nth-child(4) {
-  grid-column: 2 / span 2;
-}
-
-.gallery__item:nth-child(5) {
-  grid-column: 4 / span 2;
-}
+/* 6 photos: clean 3x2 grid, no special positioning needed */
 
 .gallery__item:hover {
   transform: translateY(-4px);

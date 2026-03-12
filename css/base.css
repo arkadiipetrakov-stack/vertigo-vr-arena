@@ -2,6 +2,13 @@
    VERTIGO VR Arena - Base & Reset Styles
    ============================================ */
 
+/* --- Custom Fonts --- */
+@font-face {
+  font-family: 'Space Ranger';
+  src: url('../assets/fonts/spaceranger-rus.otf') format('opentype');
+  font-display: swap;
+}
+
 /* --- Modern CSS Reset --- */
 *,
 *::before,

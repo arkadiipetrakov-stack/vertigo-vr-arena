@@ -179,7 +179,7 @@
 
   .timeline__step {
     grid-template-columns: 1fr;
-    padding-left: 56px;
+    padding-left: 64px;
     gap: 0;
     margin-bottom: 48px;
   }
