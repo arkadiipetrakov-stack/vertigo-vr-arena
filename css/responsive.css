@@ -233,8 +233,11 @@
   .tariff-card .btn {
     white-space: normal;
     word-break: break-word;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     padding: 14px 16px;
+    width: 100%;
+    text-align: center;
+    justify-content: center;
   }
 
   /* Messenger buttons mobile */
@@ -255,14 +258,16 @@
   }
 
   .safety-card {
-    padding: 20px 16px;
-    gap: 12px;
+    padding: 24px 20px;
+    gap: 16px;
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .safety-card__icon {
-    width: 40px;
-    height: 40px;
-    min-width: 40px;
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
   }
 
   /* Reviews */
