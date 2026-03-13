@@ -44,10 +44,12 @@
 
 .nav__logo-text,
 .footer__logo-text {
-  font-family: 'Space Ranger', var(--font-heading);
+  font-family: var(--font-heading);
   font-size: 1.75rem;
+  font-weight: 900;
   color: #fff;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   line-height: 1;
   white-space: nowrap;
 }
@@ -226,12 +228,31 @@
   align-items: center;
   justify-content: center;
   padding-top: 72px;
+  overflow: hidden;
+}
+
+.hero__bg-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  z-index: 0;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(13,12,20,0.6) 0%, rgba(13,12,20,0.65) 50%, rgba(13,12,20,0.9) 100%);
+  z-index: 1;
 }
 
 .hero__canvas {
   position: absolute;
   inset: 0;
-  z-index: 0;
+  z-index: 2;
   overflow: hidden;
 }
 
@@ -240,24 +261,17 @@
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  opacity: 0.08;
-  background-image:
-    linear-gradient(135deg, var(--accent-orange) 25%, transparent 25%),
-    linear-gradient(225deg, var(--accent-purple) 25%, transparent 25%);
-  background-size: 120px 120px;
-  background-position: 0 0, 60px 60px;
+  opacity: 0;
 }
 
 .hero__glow-orbs {
   position: absolute;
   inset: 0;
-  z-index: 0;
+  z-index: 2;
   pointer-events: none;
   background:
-    radial-gradient(ellipse 70% 60% at 50% 50%, transparent 40%, rgba(15, 15, 26, 0.4) 100%),
-    radial-gradient(ellipse 600px 500px at 25% 40%, rgba(232, 93, 21, 0.12) 0%, transparent 70%),
-    radial-gradient(ellipse 500px 600px at 75% 60%, rgba(107, 92, 231, 0.10) 0%, transparent 70%),
-    radial-gradient(ellipse 300px 300px at 50% 80%, rgba(255, 122, 51, 0.06) 0%, transparent 70%);
+    radial-gradient(ellipse 600px 500px at 25% 40%, rgba(232, 93, 21, 0.08) 0%, transparent 70%),
+    radial-gradient(ellipse 500px 600px at 75% 60%, rgba(107, 92, 231, 0.06) 0%, transparent 70%);
   animation: glow-drift 15s ease-in-out infinite;
 }
 
@@ -272,7 +286,7 @@
   max-width: 800px;
   margin: 0 auto;
   position: relative;
-  z-index: 1;
+  z-index: 3;
   padding: 0 var(--container-padding);
 }
 
@@ -282,7 +296,7 @@
 
 .hero__title {
   margin-bottom: 24px;
-  text-shadow: 0 0 40px rgba(var(--neon-cyan-rgb), 0.3);
+  text-shadow: 0 2px 8px rgba(0,0,0,0.7), 0 0 40px rgba(0,0,0,0.5);
 }
 
 .hero__title-accent {
@@ -319,6 +333,7 @@
   max-width: 600px;
   margin-inline: auto;
   line-height: 1.7;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.6);
 }
 
 .hero__ctas {
@@ -360,7 +375,7 @@
   color: var(--text-muted);
   width: 24px;
   height: 24px;
-  z-index: 2;
+  z-index: 3;
   cursor: pointer;
   transition: color var(--transition-base);
 }
